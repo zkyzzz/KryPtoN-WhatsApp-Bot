@@ -87,17 +87,21 @@ Penggunaan: kirim pesan dengan format _*!resi jne 1238757632*_
 Untuk membuat meme dengan teks atas dan bawah
 Penggunaan: kirim gambar dengan caption _*!meme aku atas | kamu bawah*_, atau juga bisa dengan membalas gambar yang sudah ada.
 
-3. *!ceklokasi*
+3. *!igstalk* _<username>_
+Untuk menstalk mantan, username jangan pakai @
+Penggunaan: *!igstalk dhimasbpy*
+
+4. *!ceklokasi*
 Cek lokasi penyebaran covid-19 di daerah sekitarmu (kelurahan).
 Penggunaan: kirimkan lokasimu lalu balas/quote/reply lokasi yang kamu kirim dengan _*!ceklokasi*_
 
-4. *!tnc*
+5. *!tnc*
 Menampilkan Syarat dan Kondisi Bot.
 
-5. *!donasi*
+6. *!donasi*
 menampilkan informasi donasi.
 
-6. *!update, !channel*
+7. *!update, !channel*
 Cek update bot ini
 
 Hope you have a great day!✨`
