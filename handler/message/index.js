@@ -413,7 +413,7 @@ module.exports = msgHandler = async (client = new Client(), message) => {
             for (let removeChat of chatAll) {
                 await client.deleteChat(removeChat.id)
             }
-            client.reply(from, 'Berhasil menghapus semua chat', id)
+            client.sendText(from, 'Berhasil menghapus semua chat')
             break
         case 'siaran':
         case 'cast':
@@ -423,7 +423,7 @@ module.exports = msgHandler = async (client = new Client(), message) => {
             for (let cast of all) {
                 await client.sendText(cast.id, castText)
             }
-            client.reply(from, 'Berhasil membuat siaran ke semua akun', id)
+            client.sendText(from, 'Berhasil membuat siaran ke semua akun')
             break
         default:
             console.log(color('[ERROR]', 'red'), color(moment(t * 1000).format('DD/MM/YY HH:mm:ss'), 'yellow'), 'Unregistered Command from', color(pushname))
