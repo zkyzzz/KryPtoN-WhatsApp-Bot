@@ -24,8 +24,8 @@ module.exports = msgHandler = async (client = new Client(), message) => {
         const isBotGroupAdmins = groupAdmins.includes(botNumber) || false
 
         // Own Prefix
-        no: process.env.OWNER_PHONE
-        const ownerNumber = '${no}@c.us'
+        const no = process.env.OWNER_PHONE
+        const ownerNumber = `${no}@c.us`
         const isOwner = sender.id == ownerNumber
 
         // Bot Prefix
