@@ -400,15 +400,14 @@ module.exports = msgHandler = async (client = new Client(), message) => {
             await client.sendTextWithMentions(from, textMention)
             break
         //Owner cmd
-        case 'botstat': {
+        case 'botstat':
             if (!isOwner) return client.sendText(from, 'Perintah ini hanya untuk Owner bot')
             const loadedMsg = await client.getAmountOfLoadedMessages()
             const chatIds = await client.getAllChatIds()
             const groups = await client.getAllGroups()
             client.sendText(from, `Status :\n- *${loadedMsg}* Loaded Messages\n- *${groups.length}* Group Chats\n- *${chatIds.length - groups.length}* Personal Chats\n- *${chatIds.length}* Total Chats`)
             break
-        }
-        case 'clearall': {
+        case 'clearall':
             if (!isOwner) return client.reply(from, 'Perintah ini hanya untuk Owner bot', id)
             const chatAll = await client.getAllChats()
             for (let removeChat of chatAll) {
@@ -416,7 +415,16 @@ module.exports = msgHandler = async (client = new Client(), message) => {
             }
             client.reply(from, 'Berhasil menghapus semua chat', id)
             break
-        }
+        case 'siaran':
+        case 'cast':
+            if (!isOwner) return client.reply(from, 'Perintah ini hanya untuk Owner bot', id)
+            const all = await client.getAllChats()
+            const castText = string
+            for (let cast of all) {
+                await client.sendText(cast.id, castText)
+            }
+            client.reply(from, 'Berhasil membuat siaran ke semua akun', id)
+            break
         default:
             console.log(color('[ERROR]', 'red'), color(moment(t * 1000).format('DD/MM/YY HH:mm:ss'), 'yellow'), 'Unregistered Command from', color(pushname))
             break
