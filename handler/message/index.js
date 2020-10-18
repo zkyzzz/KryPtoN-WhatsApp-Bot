@@ -391,12 +391,12 @@ module.exports = msgHandler = async (client = new Client(), message) => {
             if (!isGroupMsg) return client.reply(from, 'Maaf, perintah ini hanya dapat dipakai didalam grup! [Group Only]', id)
             if (!isGroupAdmins) return client.reply(from, 'Gagal, perintah ini hanya dapat digunakan oleh admin grup! [Admin Group Only]', id)
             const members = await client.getGroupMembers(groupId)
-            let text = 'Mention All\n'
+            let textMention = 'Mention All\n'
             for (let i = 0; i < members.length; i++) {
-                text += ` @${members[i].id.replace(/@c.us/g, '')}\n`
+                textMention += ` @${members[i].id.replace(/@c.us/g, '')}\n`
             }
             await sleep(2000)
-            await client.sendTextWithMentions(from, text)
+            await client.sendTextWithMentions(from, textMention)
             break
         //Owner cmd
         case 'botstat': {
