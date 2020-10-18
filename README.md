@@ -4,7 +4,7 @@
 [![CodeFactor](https://www.codefactor.io/repository/github/kry9ton/krypton-whatsapp-bot/badge)](https://www.codefactor.io/repository/github/kry9ton/krypton-whatsapp-bot)
 [![Version](https://img.shields.io/badge/version%20K--wa%20Bot-v1.1.0-brightgreen)](https://github.com/Kry9toN/KryPtoN-WhatsApp-Bot/releases)
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 [![Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/Kry9toN/KryPtoN-WhatsApp-Bot/tree/master)
@@ -121,6 +121,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <table>
   <tr>
     <td align="center"><a href="http://kry9ton.tech"><img src="https://avatars1.githubusercontent.com/u/44697929?v=4" width="100px;" alt=""/><br /><sub><b>Dhimas Bagus Prayoga</b></sub></a><br /><a href="https://github.com/Kry9toN/KryPtoN-WhatsApp-Bot/commits?author=Kry9toN" title="Code">💻</a></td>
+    <td align="center"><a href="http://rzlamrr.github.io"><img src="https://avatars3.githubusercontent.com/u/46296998?v=4" width="100px;" alt=""/><br /><sub><b>dαvιѕтα</b></sub></a><br /><a href="https://github.com/Kry9toN/KryPtoN-WhatsApp-Bot/issues?q=author%3Arzlamrr" title="Bug reports">🐛</a></td>
   </tr>
 </table>
 
