@@ -1,12 +1,11 @@
 <div align="center">
-<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
-<!-- ALL-CONTRIBUTORS-BADGE:END -->
  
 # KryPtoN Whatsapp Bot 
 [![CodeFactor](https://www.codefactor.io/repository/github/kry9ton/krypton-whatsapp-bot/badge)](https://www.codefactor.io/repository/github/kry9ton/krypton-whatsapp-bot)
-![Version](https://img.shields.io/badge/version%20K--wa%20Bot-v1.1.0-brightgreen)
-
+[![Version](https://img.shields.io/badge/version%20K--wa%20Bot-v1.1.0-brightgreen)](https://github.com/Kry9toN/KryPtoN-WhatsApp-Bot/releases)
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 [![Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/Kry9toN/KryPtoN-WhatsApp-Bot/tree/master)
 
@@ -128,5 +127,3 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
 <!-- ALL-CONTRIBUTORS-LIST:END -->
-
-This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
