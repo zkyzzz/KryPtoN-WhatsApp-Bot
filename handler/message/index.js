@@ -333,7 +333,7 @@ module.exports = msgHandler = async (client = new Client(), message) => {
               const bio = igMeta.Biodata
               const follower = igMeta.Jumlah_Followers
               const following = igMeta.Jumlah_Following
-              const post = igMeta.Jumlah_Following
+              const post = igMeta.Jumlah_Post
               await client.sendFileFromUrl(from, foto, 'thumbnail.jpg', `Nama: ${nama}\nUsername: ${username}\nBio: ${bio}\nJumlah folower: ${follower}\nJumlah following: ${following}\nJumlah post: ${post}`, null, true)
               .catch(() => client.reply(from, 'Terjadi kesalahan mungkin username yang anda kirim tidak valid!', id))
             })
