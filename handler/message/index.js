@@ -23,6 +23,10 @@ module.exports = msgHandler = async (client = new Client(), message) => {
         const isGroupAdmins = groupAdmins.includes(sender.id) || false
         const isBotGroupAdmins = groupAdmins.includes(botNumber) || false
 
+        // Own Prefix
+        const ownerNumber = '628xxxxx@c.us'
+        const isOwner = sender.id == ownerNumber
+
         // Bot Prefix
         const prefix = '!'
         body = (type === 'chat' && body.startsWith(prefix)) ? body : ((type === 'image' && caption) && caption.startsWith(prefix)) ? caption : ''
@@ -390,11 +394,22 @@ module.exports = msgHandler = async (client = new Client(), message) => {
             */
             client.reply(from, 'ehhh, what\'s that???', id)
             break
+        //Owner cmd
         case 'botstat': {
+            if (!isOwner) return client.sendText(from, 'Perintah ini hanya untuk Owner bot')
             const loadedMsg = await client.getAmountOfLoadedMessages()
             const chatIds = await client.getAllChatIds()
             const groups = await client.getAllGroups()
             client.sendText(from, `Status :\n- *${loadedMsg}* Loaded Messages\n- *${groups.length}* Group Chats\n- *${chatIds.length - groups.length}* Personal Chats\n- *${chatIds.length}* Total Chats`)
+            break
+        }
+        case 'clearall': {
+            if (!isOwner) return client.reply(from, 'Perintah ini hanya untuk Owner bot', id)
+            const chatAll = await client.getAllChats()
+            for (let removeChat of chatAll) {
+                await client.deleteChat(removeChat.id)
+            }
+            client.reply(from, 'Berhasil menghapus semua chat', id)
             break
         }
         default:
