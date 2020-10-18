@@ -10,7 +10,7 @@
   ],
   "repository": "https://github.com/Kry9toN/KryPtoN-WhatsApp-Bot",
   "website": "",
-  "stack": "container"
+  "stack": "container",
   "env": {
     "OWNER_PHONE": {
       "description": "Enter your phone number.",
