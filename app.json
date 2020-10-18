@@ -16,4 +16,5 @@
       "description": "Enter your phone number.",
       "required": true
     }
+  }
 }
