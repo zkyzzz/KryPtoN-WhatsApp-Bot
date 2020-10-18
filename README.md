@@ -3,6 +3,11 @@
 # KryPtoN Whatsapp Bot 
 [![CodeFactor](https://www.codefactor.io/repository/github/kry9ton/krypton-whatsapp-bot/badge)](https://www.codefactor.io/repository/github/kry9ton/krypton-whatsapp-bot)
 [![Version](https://img.shields.io/badge/version%20K--wa%20Bot-v1.1.0-brightgreen)](https://github.com/Kry9toN/KryPtoN-WhatsApp-Bot/releases)
+
+[![Fork](https://img.shields.io/github/forks/Kry9toN/KryPtoN-WhatsApp-Bot)](https://github.com/Kry9toN/KryPtoN-WhatsApp-Bot/network/members)
+[![Stars](https://img.shields.io/github/stars/Kry9toN/KryPtoN-WhatsApp-Bot)](https://github.com/Kry9toN/KryPtoN-WhatsApp-Bot/stargazers)
+[![Issue](https://img.shields.io/github/issues/Kry9toN/KryPtoN-WhatsApp-Bot)](https://github.com/Kry9toN/KryPtoN-WhatsApp-Bot/issues)
+
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 [![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
