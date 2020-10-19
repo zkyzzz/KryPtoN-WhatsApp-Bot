@@ -26,23 +26,29 @@ const start = (client = new Client()) => {
         msgHandler(client, message)
     })
 
+/*
     // listen group invitation
     client.onAddedToGroup(({ groupMetadata: { id }, contact: { name } }) =>
         client.getGroupMembersId(id)
             .then((ids) => {
                 console.log('[CLIENT]', color(`Invited to Group. [ ${name} : ${ids.length}]`, 'yellow'))
+                // White list
+                const gPremiList = process.env.G_PREMI_LIST
+                const isgPremiList = gPremiList.includes(id)
                 // conditions if the group members are less than 25 then the bot will leave the group
-                if (ids.length <= 25) {
-                    client.sendText(id, 'Sorry, the minimum group member is 10 user to use this bot. Bye~').then(() => client.leaveGroup(id))
+                if (ids.length <= 40) {
+                    client.sendText(id, `Hello anggota group *${name}*, terima kasih telah mengundang bot ini, untuk meliha bot menu kirim *!menu*`)
+                } else if (isgPremiList) {
+                    client.sendText(id, `Hello anggota group premium *${name}*, terima kasih telah mengundang bot ini dan berlangganan, untuk meliha bot menu kirim *!menu*, dan kirim *!premium* untuk menu fitur premium`)
                 } else {
-                    client.sendText(id, `Hello group members *${name}*, thank you for inviting this bot, to see the bot menu send *#menu*`)
+                    client.sendText(id, 'Maaf, untuk member lebih dari 40 hanya untuk member premium, info lebih lengkap https://chat.whatsapp.com/DAWsRFyVOyyEGZRZfLdzVP. Bye~').then(() => client.leaveGroup(id))
                 }
             }))
 
     client.onRemovedFromGroup((data) => {
          console.log(data)
     })
-
+*/
     // listen paricipant event on group (wellcome message)
     client.onGlobalParicipantsChanged((event) => {
          if (event.action === 'group_join') client.sendTextWithMentions(event.chat, `Hello, Welcome to the group @${event.who.replace('@c.us', '')} \n\nHave fun with us✨`)
