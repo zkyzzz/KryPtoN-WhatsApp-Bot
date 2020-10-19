@@ -421,7 +421,7 @@ module.exports = msgHandler = async (client = new Client(), message) => {
             if (!isGroupAdmins) return await client.reply(from, bot.error.notAdmin, id)
             if (!isBotGroupAdmins) return await client.reply(from, bot.error.botNotAdmin, id)
             if (args.length !== 1) return client.reply(from, 'Untuk menggunakan fitur ini, kirim perintah *!add* 628xxxxx', id)
-            const orang = args[1]
+            const orang = args[0]
             await client.addParticipant(from, `${orang}@c.us`)
                         .catch(() => client.reply(from, 'Tidak dapat menambahkan, mungkin nomer salah', id))
             break
