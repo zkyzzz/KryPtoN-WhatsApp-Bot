@@ -447,6 +447,16 @@ module.exports = msgHandler = async (client = new Client(), message) => {
             }
             client.sendText(from, 'Berhasil membuat siaran ke semua akun')
             break
+        case 'leaveall':
+            if (!isOwner) return client.reply(from, bot.error.onlyOwner, id)
+            const allChats = await client.getAllChatIds()
+            const allGroups = await client.getAllGroups()
+            for (let gclist of allGroups) {
+                await client.sendText(gclist.contact.id, `Maaf bot sedang pembersihan, total chat aktif : ${allChats.length}\nUntuk info silakan ke group support kami https://chat.whatsapp.com/DAWsRFyVOyyEGZRZfLdzVP`)
+                await client.leaveGroup(gclist.contact.id)
+            }
+            client.sendText(from, 'Berhasil keluar semua group')
+            break
         default:
             console.log(color('[ERROR]', 'red'), color(moment(t * 1000).format('DD/MM/YY HH:mm:ss'), 'yellow'), 'Unregistered Command from', color(pushname))
             break
