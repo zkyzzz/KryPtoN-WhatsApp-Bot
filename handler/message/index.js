@@ -425,11 +425,16 @@ module.exports = msgHandler = async (client = new Client(), message) => {
             await client.addParticipant(from, `${orang}@c.us`)
                         .catch(() => client.reply(from, 'Tidak dapat menambahkan, mungkin nomer salah', id))
             break
-        case 'id':
+        case 'gid':
             if (!isGroupMsg) return await client.reply(from, 'Maaf, perintah ini hanya dapat dipakai didalam grup! [Group Only]', id)
             if (!isGroupAdmins) return await client.reply(from, bot.error.notAdmin, id)
-            const idGroup = await client.getCommonGroups()
-            client.sendText(from, `ID group ${idGroup.id}`)
+            if (args.length == 1) return client.reply(from, 'Untuk menggunakan fitur ini, kirim perintah *!gid* saja', id)
+            client.sendText(from, `ID group ini adalah = ${groupId}`)
+            break
+        case 'uid':
+            if (args.length !== 1) return client.reply(from, 'Untuk menggunakan fitur ini, kirim perintah *!uid* 628xxxxx', id)
+            const uId = args[0]
+            client.sendText(from, `ID kamu ini adalah = ${uId}@c.us`)
             break
         //Owner cmd
         case 'botstat':
