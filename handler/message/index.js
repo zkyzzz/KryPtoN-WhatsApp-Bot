@@ -47,7 +47,8 @@ module.exports = msgHandler = async (client = new Client(), message) => {
                 notGroup: 'Maaf, perintah ini hanya dapat dipakai didalam grup! [Group Only]',
                 format: 'Maaf, format pesan salah silahkan periksa menu. [Wrong Format]',
                 notAdmin: 'Gagal, perintah ini hanya dapat digunakan oleh admin grup! [Admin Group Only]',
-                botNotAdmin: 'Gagal, silahkan tambahkan bot sebagai admin grup! [Bot not Admin]'
+                botNotAdmin: 'Gagal, silahkan tambahkan bot sebagai admin grup! [Bot not Admin]',
+                onlyOwner: 'Perintah ini hanya untuk Owner bot [Only Owner Bot]'
             }
         }
 
@@ -412,14 +413,14 @@ module.exports = msgHandler = async (client = new Client(), message) => {
             break
         //Owner cmd
         case 'botstat':
-            if (!isOwner) return client.sendText(from, 'Perintah ini hanya untuk Owner bot')
+            if (!isOwner) return client.reply(from, bot.error.onlyOwner, id)
             const loadedMsg = await client.getAmountOfLoadedMessages()
             const chatIds = await client.getAllChatIds()
             const groups = await client.getAllGroups()
             client.sendText(from, `Status :\n- *${loadedMsg}* Loaded Messages\n- *${groups.length}* Group Chats\n- *${chatIds.length - groups.length}* Personal Chats\n- *${chatIds.length}* Total Chats`)
             break
         case 'clearall':
-            if (!isOwner) return client.reply(from, 'Perintah ini hanya untuk Owner bot', id)
+            if (!isOwner) return client.reply(from, bot.error.onlyOwner, id)
             const chatAll = await client.getAllChats()
             for (let removeChat of chatAll) {
                 await client.deleteChat(removeChat.id)
@@ -428,7 +429,7 @@ module.exports = msgHandler = async (client = new Client(), message) => {
             break
         case 'siaran':
         case 'cast':
-            if (!isOwner) return client.reply(from, 'Perintah ini hanya untuk Owner bot', id)
+            if (!isOwner) return client.reply(from, bot.error.onlyOwner, id)
             const all = await client.getAllChats()
             const castText = string
             for (let cast of all) {
