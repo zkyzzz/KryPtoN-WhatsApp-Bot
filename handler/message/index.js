@@ -26,7 +26,7 @@ module.exports = msgHandler = async (client = new Client(), message) => {
 
         // White list
         const pmWhiteList = process.env.PM_WHITE_LIST
-        const isPmWhitelist = sender.id.includes(`${pmWhiteList}`)
+        const isPmWhitelist = pmWhiteList.includes(sender.id)
 
         // Own Prefix
         const no = process.env.OWNER_PHONE
