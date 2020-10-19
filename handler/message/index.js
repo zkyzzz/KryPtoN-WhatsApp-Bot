@@ -411,6 +411,15 @@ module.exports = msgHandler = async (client = new Client(), message) => {
             await sleep(2000)
             await client.sendTextWithMentions(from, textMention)
             break
+        case 'add':
+            if (!isGroupMsg) return await client.reply(from, 'Maaf, perintah ini hanya dapat dipakai didalam grup! [Group Only]', id)
+            if (!isGroupAdmins) return await client.reply(from, bot.error.notAdmin, id)
+            if (!isBotGroupAdmins) return await client.reply(from, bot.error.botNotAdmin, id)
+            if (args.length !== 1) return client.reply(from, 'Untuk menggunakan fitur ini, kirim perintah *!add* 628xxxxx', id)
+            const orang = args[1]
+            await client.addParticipant(from, `${orang}@c.us`)
+                        .catch(() => client.reply(from, 'Tidak dapat menambahkan, mungkin nomer salah', id))
+            break
         //Owner cmd
         case 'botstat':
             if (!isOwner) return client.reply(from, bot.error.onlyOwner, id)
