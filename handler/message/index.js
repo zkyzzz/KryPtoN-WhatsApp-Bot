@@ -24,6 +24,10 @@ module.exports = msgHandler = async (client = new Client(), message) => {
         const isGroupAdmins = groupAdmins.includes(sender.id) || false
         const isBotGroupAdmins = groupAdmins.includes(botNumber) || false
 
+        // White list
+        const pmWhiteList = process.env.PM_WHITE_LIST
+        const isPmWhitelist = sender.id.includes(`${pmWhiteList}`)
+
         // Own Prefix
         const no = process.env.OWNER_PHONE
         const ownerNumber = `${no}@c.us`
@@ -421,6 +425,12 @@ module.exports = msgHandler = async (client = new Client(), message) => {
             await client.addParticipant(from, `${orang}@c.us`)
                         .catch(() => client.reply(from, 'Tidak dapat menambahkan, mungkin nomer salah', id))
             break
+        case 'id':
+            if (!isGroupMsg) return await client.reply(from, 'Maaf, perintah ini hanya dapat dipakai didalam grup! [Group Only]', id)
+            if (!isGroupAdmins) return await client.reply(from, bot.error.notAdmin, id)
+            const idGroup = await client.getCommonGroups()
+            client.sendText(from, `ID group ${idGroup.id}`)
+            break
         //Owner cmd
         case 'botstat':
             if (!isOwner) return client.reply(from, bot.error.onlyOwner, id)
@@ -456,6 +466,10 @@ module.exports = msgHandler = async (client = new Client(), message) => {
                 await client.leaveGroup(gclist.contact.id)
             }
             client.sendText(from, 'Berhasil keluar semua group')
+            break
+        case 'test':
+            if (!isPmWhitelist) return client.reply(from, 'only premium member', id)
+            client.sendText(from, 'premium member')
             break
         default:
             console.log(color('[ERROR]', 'red'), color(moment(t * 1000).format('DD/MM/YY HH:mm:ss'), 'yellow'), 'Unregistered Command from', color(pushname))
