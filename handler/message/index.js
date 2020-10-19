@@ -432,9 +432,9 @@ module.exports = msgHandler = async (client = new Client(), message) => {
             client.sendText(from, `ID group ini adalah = ${groupId}`)
             break
         case 'uid':
-            if (args.length !== 1) return client.reply(from, 'Untuk menggunakan fitur ini, kirim perintah *!uid* 628xxxxx', id)
-            const uId = args[0]
-            client.sendText(from, `ID kamu ini adalah = ${uId}@c.us`)
+            if (args.length == 1) return client.reply(from, 'Untuk menggunakan fitur ini, kirim perintah *!uid* saja', id)
+            const uId = sender.id
+            client.sendText(from, `ID kamu ini adalah = ${uId}`)
             break
         //Owner cmd
         case 'botstat':
