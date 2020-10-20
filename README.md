@@ -55,7 +55,7 @@
 |       ✅       |   Demote User                                   |
 |       ✅       |   Kick User                                     |
 |       ✅       |   Delete bot message                            |
-|       WIP      |   Mention All User                              |
+|       ✅       |   Mention All User                              |
 
 ## To-Do
  - Add More Feature
