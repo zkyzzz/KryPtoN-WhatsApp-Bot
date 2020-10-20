@@ -28,6 +28,9 @@ module.exports = msgHandler = async (client = new Client(), message) => {
         const pmWhiteList = process.env.PM_WHITE_LIST
         const isPmWhitelist = pmWhiteList.includes(sender.id)
 
+        const gPremiList = process.env.G_PREMI_LIST
+        const isgPremiList = gPremiList.includes(groupId)
+
         // Own Prefix
         const no = process.env.OWNER_PHONE
         const ownerNumber = `${no}@c.us`
@@ -473,7 +476,7 @@ module.exports = msgHandler = async (client = new Client(), message) => {
             client.sendText(from, 'Berhasil keluar semua group')
             break
         case 'test':
-            if (!isPmWhitelist) return client.reply(from, 'only premium member', id)
+            if (!isgPremiList) return client.reply(from, 'only premium member', id)
             client.sendText(from, 'premium member')
             break
         default:
