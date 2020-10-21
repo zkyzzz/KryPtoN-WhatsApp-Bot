@@ -58,7 +58,7 @@ module.exports = msgHandler = async (client = new Client(), message) => {
                 notAdmin: 'Gagal, perintah ini hanya dapat digunakan oleh admin grup! [Admin Group Only]',
                 botNotAdmin: 'Gagal, silahkan tambahkan bot sebagai admin grup! [Bot not Admin]',
                 onlyOwner: 'Perintah ini hanya untuk Owner bot [Only Owner Bot]',
-                onlyPremi: 'Perintah ini hanya untuk member Premium saja [Only Member Premium]'
+                onlyPremi: 'Perintah ini hanya untuk member Premium saja untuk info silakan join group https://chat.whatsapp.com/DAWsRFyVOyyEGZRZfLdzVP [Only Member Premium]'
             }
         }
 
