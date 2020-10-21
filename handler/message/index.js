@@ -100,6 +100,10 @@ module.exports = msgHandler = async (client = new Client(), message) => {
             if (!isGroupAdmins) return client.reply(from, bot.error.notAdmin, id)
             await client.sendText(from, menuId.textAdmin())
             break
+        case 'premium':
+            if (!isPmWhitelist) return client.reply(from, bot.error.onlyPremi, id)
+            await client.sendText(from, menuId.textPremi())
+            break
         case 'donate':
         case 'donasi':
             await client.sendText(from, menuId.textDonasi())
@@ -126,8 +130,8 @@ module.exports = msgHandler = async (client = new Client(), message) => {
                 const API = process.env.NOBG_API
                 const outFile = './out/img/noBgResult.png'
                 var result = await removeBackgroundFromImageBase64({ imageBase64, apiKey: API, size: 'auto', type: 'auto', outFile })
-                    await fs.writeFile(outFile, result.imageBase64)
-                    client.sendImageAsSticker(from, `data:${mimetype};base64,${result.imageBase64}`).then(() => {
+                    await fs.writeFile(outFile, result.base64img)
+                    client.sendImageAsSticker(from, `data:${_mimetype};base64,${result.base64img}`).then(() => {
                     client.reply(from, 'Here\'s your sticker')
                     console.log(`Sticker Processed for ${processTime(t, moment())} Second`)
                 })
