@@ -4,7 +4,7 @@ const options = require('./utils/options')
 const msgHandler = require('./handler/message')
 
 const start = (client = new Client()) => {
-    console.log('[DEV]', color('Red Emperor', 'yellow'))
+    console.log('[DEV]', color('KryPtoN', 'yellow'))
     console.log('[CLIENT] CLIENT Started!')
 
     // Force it to keep the current session
