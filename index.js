@@ -2,6 +2,7 @@ const { create, Client } = require('@open-wa/wa-automate')
 const { color } = require('./utils')
 const options = require('./utils/options')
 const msgHandler = require('./handler/message')
+const sleep = ms => new Promise(res => setTimeout(res, ms))
 
 const start = (client = new Client()) => {
     console.log('[DEV]', color('KryPtoN', 'yellow'))
@@ -40,7 +41,8 @@ const start = (client = new Client()) => {
                 } else if (isgPremiList) {
                     client.sendText(id, `Hello anggota group premium *${name}*, terima kasih telah mengundang bot ini dan berlangganan, untuk meliha bot menu kirim *!menu*, dan kirim *!premium* untuk menu fitur premium`)
                 } else {
-                    client.sendText(id, 'Maaf, untuk member lebih dari 40 hanya untuk member premium, info lebih lengkap https://chat.whatsapp.com/DAWsRFyVOyyEGZRZfLdzVP. Bye~').then(() => client.leaveGroup(id))
+                    client.sendText(id, 'Maaf, untuk member lebih dari 40 hanya untuk member premium, info lebih lengkap https://chat.whatsapp.com/DAWsRFyVOyyEGZRZfLdzVP. Bye~')
+                    .then(() => await sleep(5000) client.leaveGroup(id))
                 }
             }))
 
