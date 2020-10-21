@@ -113,6 +113,8 @@ module.exports = msgHandler = async (client = new Client(), message) => {
         case 'sticker':
         case 'stiker': {
             if ((isMedia || isQuotedImage) && args.length === 0) {
+                if (!isPmWhitelist) return client.reply(from, bot.error.onlyPremi, id)
+                if (isGroupMsg) return client.reply(from, bot.error.onlyPm, id)
                 const encryptMedia = isQuotedImage ? quotedMsg : message
                 const _mimetype = isQuotedImage ? quotedMsg.mimetype : mimetype
                 const mediaData = await decryptMedia(encryptMedia, uaOverride)
