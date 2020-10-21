@@ -35,13 +35,18 @@ const start = (client = new Client()) => {
                 // White list
                 const gPremiList = process.env.G_PREMI_LIST
                 const isgPremiList = gPremiList.includes(id)
-                // conditions if the group members are less than 25 then the bot will leave the group
-                if (ids.length <= 40) {
+                if (ids.length <=10 ) {
+                    client.sendText(id, 'Maaf, untuk member kurang dari 10, info lebih lengkap https://chat.whatsapp.com/DAWsRFyVOyyEGZRZfLdzVP. Bye~')
+                    .then(() => {
+                        sleep(5000)
+                        client.leaveGroup(id)
+                    })
+                } else if (ids.length <= 50) {
                     client.sendText(id, `Hello anggota group *${name}*, terima kasih telah mengundang bot ini, untuk meliha bot menu kirim *!menu*`)
                 } else if (isgPremiList) {
                     client.sendText(id, `Hello anggota group premium *${name}*, terima kasih telah mengundang bot ini dan berlangganan, untuk meliha bot menu kirim *!menu*, dan kirim *!premium* untuk menu fitur premium`)
                 } else {
-                    client.sendText(id, 'Maaf, untuk member lebih dari 40 hanya untuk member premium, info lebih lengkap https://chat.whatsapp.com/DAWsRFyVOyyEGZRZfLdzVP. Bye~')
+                    client.sendText(id, 'Maaf, untuk member lebih dari 50 hanya untuk member premium, info lebih lengkap https://chat.whatsapp.com/DAWsRFyVOyyEGZRZfLdzVP. Bye~')
                     .then(() => {
                         sleep(5000)
                         client.leaveGroup(id)
