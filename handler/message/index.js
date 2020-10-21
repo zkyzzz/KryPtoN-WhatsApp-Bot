@@ -98,9 +98,7 @@ module.exports = msgHandler = async (client = new Client(), message) => {
         case 'menuadmin':
             if (!isGroupMsg) return client.reply(from, bot.error.notGroup, id)
             if (!isGroupAdmins) return client.reply(from, bot.error.notAdmin, id)
-            const onPm = sender.id
-            await client.sendText(from, 'Menu admin di kirim ke PM silahkan cek')
-            await client.sendText(onPM, menuId.textAdmin())
+            await client.sendText(from, menuId.textAdmin())
             break
         case 'donate':
         case 'donasi':
