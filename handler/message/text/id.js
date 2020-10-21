@@ -147,5 +147,15 @@ Penggunaan: kirim !sticker dengan url gambar`
 
 exports.textLinkPremium = () => {
     return `
-https://telegra.ph/Langganan-Krypton-Bot-10-21`
+https://telegra.ph/Langganan-Krypton-Bot-10-21
+
+Nomor wallet:
+083108180955
+
+Bank: BTPN
+norek 90130016722
+a/n OVIN
+
+Wallet:
+OvO-Gopay-Dana-LinkAja`
 }
