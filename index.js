@@ -50,7 +50,16 @@ const start = (client = new Client()) => {
 
     // listen paricipant event on group (wellcome message)
     client.onGlobalParicipantsChanged((event) => {
-         if (event.action === 'group_join') client.sendTextWithMentions(event.chat, `Hello, Welcome to the group @${event.who.replace('@c.us', '')} \n\nHave fun with us✨`)
+        if (event.action === 'add') {
+            var blackList = process.env.BLACK_LIST
+            if (blackList.includes(event.who)) {
+                client.sendTextWithMentions(event.chat, `@${event.who.replace('@c.us', '')} User spammer detected, saya akan mengekick nya`)
+                .then(() => client.removeParticipant(event.chat, event.who))
+            } else {
+                client.sendTextWithMentions(event.chat, `Hallo, Selamat datang di grup @${event.who.replace('@c.us', '')} \n\nSelamat bersenang-senang semua✨`)
+            }
+        }
+        if (event.action === 'remove') return client.sendTextWithMentions(event.chat, `Selamat jalan user @${event.who.replace('@c.us', '')}`)
     })
 
     client.onIncomingCall((callData) => {

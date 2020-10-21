@@ -123,23 +123,26 @@ module.exports = msgHandler = async (client = new Client(), message) => {
             } else if ((isMedia || isQuotedImage) && args[0] === 'nobg') {
                 if (!isPmWhitelist) return client.reply(from, bot.error.onlyPremi, id)
                 if (isGroupMsg) return client.reply(from, 'Maaf, perintah ini hanya di gunakan di private message saja [PM Only]', id)
-                const encryptMedia = isQuotedImage ? quotedMsg : message
-                const _mimetype = isQuotedImage ? quotedMsg.mimetype : mimetype
-                const mediaData = await decryptMedia(encryptMedia, uaOverride)
-                const imageBase64 = `data:${_mimetype};base64,${mediaData.toString('base64')}`
-                const API = process.env.NOBG_API
-                const final = await removeBackgroundFromImageBase64({
-                    imageBase64,
-                    apiKey: API,
-                    size: 'auto',
-                    type: 'auto'
-                })
-                    const imageResult = final.base64img
-                    client.sendImageAsSticker(from, imageResult).then(() => {
-                    client.reply(from, 'Here\'s your sticker')
-                    console.log(`Sticker Processed for ${processTime(t, moment())} Second`)
-                })
-                
+                try {
+                    const encryptMedia = isQuotedImage ? quotedMsg : message
+                    const _mimetype = isQuotedImage ? quotedMsg.mimetype : mimetype
+                    const mediaData = await decryptMedia(encryptMedia, uaOverride)
+                    const imageBase64 = `data:${_mimetype};base64,${mediaData.toString('base64')}`
+                    const base64img = imageBase64
+                    const outFile = './out/img/noBg.png'
+                    const API = process.env.NOBG_API
+                    client.reply(from, 'Tunggu dalam proses menghilangkan background', id)
+                    const result = await removeBackgroundFromImageBase64({
+                        base64img,
+                        apiKey: API,
+                        size: 'auto',
+                        type: 'auto',
+                        outFile
+                        })
+                        await client.sendImageAsSticker(from, `data:${_mimetype};base64,${result.base64img}`)
+                    } catch(err) {
+                        console.log(err)
+                }                
             } else if (args.length === 1) {
                 if (!isUrl(url)) { await client.reply(from, 'Maaf, link yang kamu kirim tidak valid. [Invalid Link]', id) }
                 client.sendStickerfromUrl(from, url).then((r) => (!r && r !== undefined)
