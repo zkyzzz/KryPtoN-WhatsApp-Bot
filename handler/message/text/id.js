@@ -14,7 +14,6 @@ Dengan menggunakan source code / bot ini maka anda setuju dengan Syarat dan Kond
     • pembakaran hutan / penggundulan hutan
     • ujaran kebencian atau diskriminasi berdasarkan usia, jenis kelamin, identitas gender, ras, seksualitas, agama, kebangsaan
 
-Base Source Code BOT : https://github.com/YogaSakti/imageToSticker
 Source Code BOT : https://github.com/Kry9toN/KryPtoN-WhatsApp-Bot
 NodeJS WhatsApp library: https://github.com/open-wa/wa-automate-nodejs
 
@@ -34,35 +33,6 @@ Penggunaan: kirim gambar dengan caption !sticker atau balas gambar yang sudah di
 2. *!sticker* _<Url Gambar>_
 Untuk merubah gambar dari url menjadi sticker. 
 Penggunaan: 
-
-3. *!gifsticker* _<Giphy URL>_ / *!stickergif* _<Giphy URL>_
-Untuk merubah gif menjadi sticker (Giphy Only)
-Penggunaan: Kirim pesan dengan format *gifsticker https://media.giphy.com/media/JUvI2c1ddyzkwK4RlV/giphy.gif*
-
-Downloader:
-1. *!tiktok* _<tiktok url>_
-Untuk mengunduh video dari video tiktok.
-Penggunaan: kirim pesan dengan format *!tiktok https://www.tiktok.com/@itsandani/video/6869248690381425922* 
-
-2. *!fb* _<post/video url>_
-Untuk mengunduh video dari Facebook.
-Penggunaan: kirim pesan dengan format *!fb https://www.facebook.com/.....*
-
-3. *!ig* _<instagram post url>_
-Untuk mengunduh photo dan video dari instagram.
-Penggunaan: kirim pesan dengan format *!ig https://www.instagram.com/p/BPOd1vhDMIp/*
-
-4. *!twt* _<twitter post url>_
-Untuk mengunduh photo dan video dari Twitter.
-Penggunaan: kirim pesan dengan format *!twt https://twitter.com/ntsana_/status/1306108656887324672*
-
-5. *!ytmp3* _<twitter post url>_
-Untuk mengunduh musik dari Youtube.
-Penggunaan: kirim pesan dengan format *!ytmp3 https://youtu.be/cIYdfWFsMXw*
-
-6. *!ytmp4* _<twitter post url>_
-Untuk mengunduh video dari Youtube.
-Penggunaan: kirim pesan dengan format *!ytmp4 https://youtu.be/cIYdfWFsMXw*
 
 Edukasi:
 
@@ -136,4 +106,42 @@ Hai, terimakasih telah menggunakan bot ini, untuk mendukung bot ini kamu dapat m
 Donasi akan digunakan untuk pengembangan dan pengoperasian bot ini.
 
 Terimakasih.`
+}
+
+exports.textPremi = () => {
+    return `
+Hi, ${pushname}! 👋️
+Ini adalah fitur premium untuk kamu
+
+1. *!tiktok* _<tiktok url>_
+Untuk mengunduh video dari video tiktok.
+Penggunaan: kirim pesan dengan format *!tiktok https://www.tiktok.com/@itsandani/video/6869248690381425922* 
+
+2. *!fb* _<post/video url>_
+Untuk mengunduh video dari Facebook.
+Penggunaan: kirim pesan dengan format *!fb https://www.facebook.com/.....*
+
+3. *!ig* _<instagram post url>_
+Untuk mengunduh photo dan video dari instagram.
+Penggunaan: kirim pesan dengan format *!ig https://www.instagram.com/p/BPOd1vhDMIp/*
+
+4. *!twt* _<twitter post url>_
+Untuk mengunduh photo dan video dari Twitter.
+Penggunaan: kirim pesan dengan format *!twt https://twitter.com/ntsana_/status/1306108656887324672*
+
+5. *!ytmp3* _<twitter post url>_
+Untuk mengunduh musik dari Youtube.
+Penggunaan: kirim pesan dengan format *!ytmp3 https://youtu.be/cIYdfWFsMXw*
+
+6. *!ytmp4* _<twitter post url>_
+Untuk mengunduh video dari Youtube.
+Penggunaan: kirim pesan dengan format *!ytmp4 https://youtu.be/cIYdfWFsMXw*
+
+7. *!sticker nobg*
+Untuk merubah gambar menjadi sticker tanpa background. 
+Penggunaan: kirim gambar dengan caption !sticker nobg atau balas gambar yang sudah dikirim dengan !sticker nobg
+
+8. *!gifsticker* _<Giphy URL>_ / *!stickergif* _<Giphy URL>_
+Untuk merubah gif menjadi sticker (Giphy Only)
+Penggunaan: Kirim pesan dengan format *gifsticker https://media.giphy.com/media/JUvI2c1ddyzkwK4RlV/giphy.gif*`
 }
