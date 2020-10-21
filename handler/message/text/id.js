@@ -25,15 +25,6 @@ exports.textMenu = (pushname) => {
 Hi, ${pushname}! 👋️
 Berikut adalah beberapa fitur yang ada pada bot ini!✨
 
-Sticker Creator:
-1. *!sticker*
-Untuk merubah gambar menjadi sticker. 
-Penggunaan: kirim gambar dengan caption !sticker atau balas gambar yang sudah dikirim dengan !sticker
-
-2. *!sticker* _<Url Gambar>_
-Untuk merubah gambar dari url menjadi sticker. 
-Penggunaan: 
-
 Edukasi:
 
 1. *!translate* _<kode bahasa>_
@@ -108,7 +99,7 @@ Donasi akan digunakan untuk pengembangan dan pengoperasian bot ini.
 Terimakasih.`
 }
 
-exports.textPremi = () => {
+exports.textPremi = (pushname) => {
     return `
 Hi, ${pushname}! 👋️
 Ini adalah fitur premium untuk kamu
@@ -143,7 +134,15 @@ Penggunaan: kirim gambar dengan caption !sticker nobg atau balas gambar yang sud
 
 8. *!gifsticker* _<Giphy URL>_ / *!stickergif* _<Giphy URL>_
 Untuk merubah gif menjadi sticker (Giphy Only)
-Penggunaan: Kirim pesan dengan format *gifsticker https://media.giphy.com/media/JUvI2c1ddyzkwK4RlV/giphy.gif*`
+Penggunaan: Kirim pesan dengan format *gifsticker https://media.giphy.com/media/JUvI2c1ddyzkwK4RlV/giphy.gif*
+
+9. *!sticker*
+Untuk merubah gambar menjadi sticker. 
+Penggunaan: kirim gambar dengan caption !sticker atau balas gambar yang sudah dikirim dengan !sticker
+
+10. *!sticker* _<Url Gambar>_
+Untuk merubah gambar dari url menjadi sticker.
+Penggunaan: kirim !sticker dengan url gambar`
 }
 
 exports.textLinkPremium = () => {
