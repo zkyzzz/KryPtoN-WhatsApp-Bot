@@ -521,7 +521,7 @@ module.exports = msgHandler = async (client = new Client(), message) => {
             if (!isgPremiList) return client.reply(from, 'only premium member', id)
             client.sendText(from, 'premium member')
             break
-        case 'premium':
+        case 'premiumlink':
             client.sendText(from, menuId.textLinkPremium)
             break
         default:
