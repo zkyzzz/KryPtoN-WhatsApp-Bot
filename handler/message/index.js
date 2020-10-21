@@ -59,6 +59,7 @@ module.exports = msgHandler = async (client = new Client(), message) => {
                 botNotAdmin: 'Gagal, silahkan tambahkan bot sebagai admin grup! [Bot not Admin]',
                 onlyOwner: 'Perintah ini hanya untuk Owner bot [Only Owner Bot]',
                 onlyPremi: 'Perintah ini hanya untuk member Premium saja untuk info silakan join group https://chat.whatsapp.com/DAWsRFyVOyyEGZRZfLdzVP [Only Member Premium]'
+                onlyPm: 'Maaf, perintah ini hanya di gunakan di private message saja [PM Only]'
             }
         }
 
@@ -122,7 +123,7 @@ module.exports = msgHandler = async (client = new Client(), message) => {
                 })
             } else if ((isMedia || isQuotedImage) && args[0] === 'nobg') {
                 if (!isPmWhitelist) return client.reply(from, bot.error.onlyPremi, id)
-                if (isGroupMsg) return client.reply(from, 'Maaf, perintah ini hanya di gunakan di private message saja [PM Only]', id)
+                if (isGroupMsg) return client.reply(from, bot.error.onlyPm, id)
                 try {
                     const encryptMedia = isQuotedImage ? quotedMsg : message
                     const _mimetype = isQuotedImage ? quotedMsg.mimetype : mimetype
@@ -158,6 +159,7 @@ module.exports = msgHandler = async (client = new Client(), message) => {
         case 'gifstiker':
         case 'gifsticker': {
             if (!isPmWhitelist) return client.reply(from, bot.error.onlyPremi, id)
+            if (isGroupMsg) return client.reply(from, bot.error.onlyPm, id)
             if (args.length !== 1) return client.reply(from, bot.error.format, id)
             const isGiphy = url.match(new RegExp(/https?:\/\/(www\.)?giphy.com/, 'gi'))
             const isMediaGiphy = url.match(new RegExp(/https?:\/\/media.giphy.com\/media/, 'gi'))
@@ -186,6 +188,7 @@ module.exports = msgHandler = async (client = new Client(), message) => {
         // Video Downloader
         case 'tiktok':
             if (!isPmWhitelist) return client.reply(from, bot.error.onlyPremi, id)
+            if (isGroupMsg) return client.reply(from, bot.error.onlyPm, id)
             if (args.length !== 1) return client.reply(from, bot.error.format, id)
             if (!isUrl(url) && !url.includes('tiktok.com')) return client.reply(from, 'Maaf, link yang kamu kirim tidak valid. [Invalid Link]', id)
             await client.reply(from, `_Scraping Metadata..._ \n\n${menuId.textDonasi()}`, id)
@@ -200,6 +203,7 @@ module.exports = msgHandler = async (client = new Client(), message) => {
         case 'ig':
         case 'instagram':
             if (!isPmWhitelist) return client.reply(from, bot.error.onlyPremi, id)
+            if (isGroupMsg) return client.reply(from, bot.error.onlyPm, id)
             if (args.length !== 1) return client.reply(from, bot.error.format, id)
             if (!isUrl(url) && !url.includes('instagram.com')) return client.reply(from, 'Maaf, link yang kamu kirim tidak valid. [Invalid Link]', id)
             await client.reply(from, `_Scraping Metadata..._ \n\n${menuId.textDonasi()}`, id)
@@ -233,6 +237,7 @@ module.exports = msgHandler = async (client = new Client(), message) => {
         case 'twt':
         case 'twitter':
             if (!isPmWhitelist) return client.reply(from, bot.error.onlyPremi, id)
+            if (isGroupMsg) return client.reply(from, bot.error.onlyPm, id)
             if (args.length !== 1) return client.reply(from, bot.error.format, id)
             if (!isUrl(url) & !url.includes('twitter.com') || url.includes('t.co')) return client.reply(from, 'Maaf, url yang kamu kirim tidak valid. [Invalid Link]', id)
             await client.reply(from, `_Scraping Metadata..._ \n\n${menuId.textDonasi()}`, id)
@@ -257,6 +262,7 @@ module.exports = msgHandler = async (client = new Client(), message) => {
         case 'fb':
         case 'facebook':
             if (!isPmWhitelist) return client.reply(from, bot.error.onlyPremi, id)
+            if (isGroupMsg) return client.reply(from, bot.error.onlyPm, id)
             if (args.length !== 1) return client.reply(from, bot.error.format, id)
             if (!isUrl(url) && !url.includes('facebook.com')) return client.reply(from, 'Maaf, url yang kamu kirim tidak valid. [Invalid Link]', id)
             await client.reply(from, bot.wait, id)
@@ -281,6 +287,7 @@ module.exports = msgHandler = async (client = new Client(), message) => {
             break
         case 'ytmp3':
             if (!isPmWhitelist) return client.reply(from, bot.error.onlyPremi, id)
+            if (isGroupMsg) return client.reply(from, bot.error.onlyPm, id)
             if (args.length !== 1) return client.reply(from, bot.error.format, id)
             if (!isUrl(url) && !url.includes('youtube.com')) return client.reply(from, 'Maaf, url yang kamu kirim tidak valid. [Invalid Link]', id)
             await client.reply(from, bot.wait, id)
@@ -300,6 +307,7 @@ module.exports = msgHandler = async (client = new Client(), message) => {
             break
         case 'ytmp4' :
             if (!isPmWhitelist) return client.reply(from, bot.error.onlyPremi, id)
+            if (isGroupMsg) return client.reply(from, bot.error.onlyPm, id)
             if (args.length !== 1) return client.reply(from, bot.error.format, id)
             if (!isUrl(url) && !url.includes('youtube.com')) return client.reply(from, 'Maaf, url yang kamu kirim tidak valid. [Invalid Link]', id)
             await client.reply(from, bot.wait, id)
@@ -395,6 +403,7 @@ module.exports = msgHandler = async (client = new Client(), message) => {
             break
         // Group Commands (group admin only)
         case 'kick':
+            if (!isgPremiList) return client.reply(from, bot.error.onlyPremi, id)
             if (!isGroupMsg) return client.reply(from, 'Maaf, perintah ini hanya dapat dipakai didalam grup! [Group Only]', id)
             if (!isGroupAdmins) return client.reply(from, bot.error.notAdmin, id)
             if (!isBotGroupAdmins) return client.reply(from, bot.error.botNotAdmin, id)
@@ -407,6 +416,7 @@ module.exports = msgHandler = async (client = new Client(), message) => {
             }
             break
         case 'promote':
+            if (!isgPremiList) return client.reply(from, bot.error.onlyPremi, id)
             if (!isGroupMsg) return await client.reply(from, 'Maaf, perintah ini hanya dapat dipakai didalam grup! [Group Only]', id)
             if (!isGroupAdmins) return await client.reply(from, bot.error.notAdmin, id)
             if (!isBotGroupAdmins) return await client.reply(from, bot.error.botNotAdmin, id)
@@ -417,6 +427,7 @@ module.exports = msgHandler = async (client = new Client(), message) => {
             await client.sendTextWithMentions(from, `Request diterima, menambahkan @${mentionedJidList[0].replace('@c.us', '')} sebagai admin.`)
             break
         case 'demote':
+            if (!isgPremiList) return client.reply(from, bot.error.onlyPremi, id)
             if (!isGroupMsg) return client.reply(from, 'Maaf, perintah ini hanya dapat dipakai didalam grup! [Group Only]', id)
             if (!isGroupAdmins) return client.reply(from, bot.error.notAdmin, id)
             if (!isBotGroupAdmins) return client.reply(from, bot.error.botNotAdmin, id)
@@ -439,6 +450,7 @@ module.exports = msgHandler = async (client = new Client(), message) => {
             break
         case 'tagall':
         case 'everyone':
+            if (!isgPremiList) return client.reply(from, bot.error.onlyPremi, id)
             if (!isGroupMsg) return client.reply(from, 'Maaf, perintah ini hanya dapat dipakai didalam grup! [Group Only]', id)
             if (!isGroupAdmins) return client.reply(from, bot.error.notAdmin, id)
             const members = await client.getGroupMembers(groupId)

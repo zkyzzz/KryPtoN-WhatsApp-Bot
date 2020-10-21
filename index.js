@@ -42,7 +42,7 @@ const start = (client = new Client()) => {
                     client.sendText(id, `Hello anggota group premium *${name}*, terima kasih telah mengundang bot ini dan berlangganan, untuk meliha bot menu kirim *!menu*, dan kirim *!premium* untuk menu fitur premium`)
                 } else {
                     client.sendText(id, 'Maaf, untuk member lebih dari 40 hanya untuk member premium, info lebih lengkap https://chat.whatsapp.com/DAWsRFyVOyyEGZRZfLdzVP. Bye~')
-                    .then(() => await sleep(5000) client.leaveGroup(id))
+                    .then(() => sleep(5000) client.leaveGroup(id))
                 }
             }))
 
