@@ -112,48 +112,92 @@ module.exports = msgHandler = async (client = new Client(), message) => {
         // Sticker Creator
         case 'sticker':
         case 'stiker': {
-            if ((isMedia || isQuotedImage) && args.length === 0) {
-                if (!isPmWhitelist) return client.reply(from, bot.error.onlyPremi, id)
-                if (isGroupMsg) return client.reply(from, bot.error.onlyPm, id)
-                const encryptMedia = isQuotedImage ? quotedMsg : message
-                const _mimetype = isQuotedImage ? quotedMsg.mimetype : mimetype
-                const mediaData = await decryptMedia(encryptMedia, uaOverride)
-                const imageBase64 = `data:${_mimetype};base64,${mediaData.toString('base64')}`
-                client.sendImageAsSticker(from, imageBase64).then(() => {
-                    client.reply(from, 'Here\'s your sticker')
-                    console.log(`Sticker Processed for ${processTime(t, moment())} Second`)
-                })
-            } else if ((isMedia || isQuotedImage) && args[0] === 'nobg') {
-                if (!isPmWhitelist) return client.reply(from, bot.error.onlyPremi, id)
-                if (isGroupMsg) return client.reply(from, bot.error.onlyPm, id)
-                try {
+            if (isGroupMsg) {
+                if ((isMedia || isQuotedImage) && args.length === 0) {
+                    if (!isgPremiList) return client.reply(from, bot.error.onlyPremi, id)
                     const encryptMedia = isQuotedImage ? quotedMsg : message
                     const _mimetype = isQuotedImage ? quotedMsg.mimetype : mimetype
                     const mediaData = await decryptMedia(encryptMedia, uaOverride)
                     const imageBase64 = `data:${_mimetype};base64,${mediaData.toString('base64')}`
-                    const base64img = imageBase64
-                    const outFile = './out/img/noBg.png'
-                    const API = process.env.NOBG_API
-                    client.reply(from, 'Tunggu dalam proses menghilangkan background', id)
-                    const result = await removeBackgroundFromImageBase64({
-                        base64img,
-                        apiKey: API,
-                        size: 'auto',
-                        type: 'auto',
-                        outFile
-                        })
-                        await client.sendImageAsSticker(from, `data:${_mimetype};base64,${result.base64img}`)
-                    } catch(err) {
-                        console.log(err)
-                }                
-            } else if (args.length === 1) {
-                if (!isUrl(url)) { await client.reply(from, 'Maaf, link yang kamu kirim tidak valid. [Invalid Link]', id) }
-                client.sendStickerfromUrl(from, url).then((r) => (!r && r !== undefined)
-                    ? client.sendText(from, 'Maaf, link yang kamu kirim tidak memuat gambar. [No Image]')
-                    : client.reply(from, 'Here\'s your sticker')).then(() => console.log(`Sticker Processed for ${processTime(t, moment())} Second`))
+                    client.sendImageAsSticker(from, imageBase64).then(() => {
+                        client.reply(from, 'Here\'s your sticker')
+                        console.log(`Sticker Processed for ${processTime(t, moment())} Second`)
+                    })
+                } else if ((isMedia || isQuotedImage) && args[0] === 'nobg') {
+                    if (!isPmWhitelist) return client.reply(from, bot.error.onlyPremi, id)
+                    if (isGroupMsg) return client.reply(from, bot.error.onlyPm, id)
+                    try {
+                        const encryptMedia = isQuotedImage ? quotedMsg : message
+                        const _mimetype = isQuotedImage ? quotedMsg.mimetype : mimetype
+                        const mediaData = await decryptMedia(encryptMedia, uaOverride)
+                        const imageBase64 = `data:${_mimetype};base64,${mediaData.toString('base64')}`
+                        const base64img = imageBase64
+                        const outFile = './out/img/noBg.png'
+                        const API = process.env.NOBG_API
+                        client.reply(from, 'Tunggu dalam proses menghilangkan background', id)
+                        const result = await removeBackgroundFromImageBase64({
+                            base64img,
+                            apiKey: API,
+                            size: 'auto',
+                            type: 'auto',
+                            outFile
+                            })
+                            await client.sendImageAsSticker(from, `data:${_mimetype};base64,${result.base64img}`)
+                        } catch(err) {
+                            console.log(err)
+                    }                
+                } else if (args.length === 1) {
+                    if (!isUrl(url)) { await client.reply(from, 'Maaf, link yang kamu kirim tidak valid. [Invalid Link]', id) }
+                    client.sendStickerfromUrl(from, url).then((r) => (!r && r !== undefined)
+                        ? client.sendText(from, 'Maaf, link yang kamu kirim tidak memuat gambar. [No Image]')
+                        : client.reply(from, 'Here\'s your sticker')).then(() => console.log(`Sticker Processed for ${processTime(t, moment())} Second`))
+                } else {
+                    await client.reply(from, 'Tidak ada gambar! Untuk membuka daftar perintah kirim !menu [Wrong Format]', id)
+                }
             } else {
-                await client.reply(from, 'Tidak ada gambar! Untuk membuka daftar perintah kirim !menu [Wrong Format]', id)
+                if ((isMedia || isQuotedImage) && args.length === 0) {
+                    if (!isPmWhitelist) return client.reply(from, bot.error.onlyPremi, id)
+                    const encryptMedia = isQuotedImage ? quotedMsg : message
+                    const _mimetype = isQuotedImage ? quotedMsg.mimetype : mimetype
+                    const mediaData = await decryptMedia(encryptMedia, uaOverride)
+                    const imageBase64 = `data:${_mimetype};base64,${mediaData.toString('base64')}`
+                    client.sendImageAsSticker(from, imageBase64).then(() => {
+                        client.reply(from, 'Here\'s your sticker')
+                        console.log(`Sticker Processed for ${processTime(t, moment())} Second`)
+                    })
+                } else if ((isMedia || isQuotedImage) && args[0] === 'nobg') {
+                    if (!isPmWhitelist) return client.reply(from, bot.error.onlyPremi, id)
+                    if (isGroupMsg) return client.reply(from, bot.error.onlyPm, id)
+                    try {
+                        const encryptMedia = isQuotedImage ? quotedMsg : message
+                        const _mimetype = isQuotedImage ? quotedMsg.mimetype : mimetype
+                        const mediaData = await decryptMedia(encryptMedia, uaOverride)
+                        const imageBase64 = `data:${_mimetype};base64,${mediaData.toString('base64')}`
+                        const base64img = imageBase64
+                        const outFile = './out/img/noBg.png'
+                        const API = process.env.NOBG_API
+                        client.reply(from, 'Tunggu dalam proses menghilangkan background', id)
+                        const result = await removeBackgroundFromImageBase64({
+                            base64img,
+                            apiKey: API,
+                            size: 'auto',
+                            type: 'auto',
+                            outFile
+                            })
+                            await client.sendImageAsSticker(from, `data:${_mimetype};base64,${result.base64img}`)
+                        } catch(err) {
+                            console.log(err)
+                    }                
+                } else if (args.length === 1) {
+                    if (!isUrl(url)) { await client.reply(from, 'Maaf, link yang kamu kirim tidak valid. [Invalid Link]', id) }
+                    client.sendStickerfromUrl(from, url).then((r) => (!r && r !== undefined)
+                        ? client.sendText(from, 'Maaf, link yang kamu kirim tidak memuat gambar. [No Image]')
+                        : client.reply(from, 'Here\'s your sticker')).then(() => console.log(`Sticker Processed for ${processTime(t, moment())} Second`))
+                } else {
+                    await client.reply(from, 'Tidak ada gambar! Untuk membuka daftar perintah kirim !menu [Wrong Format]', id)
+                }
             }
+            
             break
         }
         case 'stikergif':
