@@ -7,6 +7,7 @@ const { msgFilter, color, processTime, isUrl } = require('../../utils')
 const mentionList = require('../../utils/mention')
 const { uploadImages } = require('../../utils/fetcher')
 const sleep = ms => new Promise(res => setTimeout(res, ms))
+const { RemoveBgResult, removeBackgroundFromImageBase64, removeBackgroundFromImageFile } = require('remove.bg')
 
 const { menuId, menuEn } = require('./text') // Indonesian & English menu
 
