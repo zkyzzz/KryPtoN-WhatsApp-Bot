@@ -57,6 +57,7 @@ module.exports = msgHandler = async (client = new Client(), message) => {
                 notAdmin: 'Gagal, perintah ini hanya dapat digunakan oleh admin grup! [Admin Group Only]',
                 botNotAdmin: 'Gagal, silahkan tambahkan bot sebagai admin grup! [Bot not Admin]',
                 onlyOwner: 'Perintah ini hanya untuk Owner bot [Only Owner Bot]'
+                onlyPremi: 'Perintah ini hanya untuk member Premium saja [Only Member Premium]'
             }
         }
 
@@ -115,11 +116,20 @@ module.exports = msgHandler = async (client = new Client(), message) => {
                     console.log(`Sticker Processed for ${processTime(t, moment())} Second`)
                 })
             } else if (args[0] === 'nobg') {
-                /**
-                * This is Premium feature.
-                * Check premium feature at https://trakteer.id/red-emperor/showcase or chat Author for Information.
-                */
-                client.reply(from, 'ehhh, what\'s that???', id)
+                if (!isPmWhitelist) return client.reply(from, bot.error.onlyPremi, id)
+                const encryptMedia = isQuotedImage ? quotedMsg : message
+                const _mimetype = isQuotedImage ? quotedMsg.mimetype : mimetype
+                const mediaData = await decryptMedia(encryptMedia, uaOverride)
+                const imageBase64 = `data:${_mimetype};base64,${mediaData.toString('base64')}`
+                const API = process.env.NOBG_API
+                const outFile = './out/img/noBgResult.png'
+                var result = await removeBackgroundFromImageBase64({ imageBase64, apiKey: API, size: 'auto', type: 'auto', outFile })
+                    await fs.writeFile(outFile, result.imageBase64)
+                    client.sendImageAsSticker(from, `data:${mimetype};base64,${result.imageBase64}`).then(() => {
+                    client.reply(from, 'Here\'s your sticker')
+                    console.log(`Sticker Processed for ${processTime(t, moment())} Second`)
+                })
+                
             } else if (args.length === 1) {
                 if (!isUrl(url)) { await client.reply(from, 'Maaf, link yang kamu kirim tidak valid. [Invalid Link]', id) }
                 client.sendStickerfromUrl(from, url).then((r) => (!r && r !== undefined)
