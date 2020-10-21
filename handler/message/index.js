@@ -128,10 +128,9 @@ module.exports = msgHandler = async (client = new Client(), message) => {
                 const mediaData = await decryptMedia(encryptMedia, uaOverride)
                 const imageBase64 = `data:${_mimetype};base64,${mediaData.toString('base64')}`
                 const API = process.env.NOBG_API
-                const outFile = './out/img/noBgResult.png'
-                var result = await removeBackgroundFromImageBase64({ imageBase64, apiKey: API, size: 'auto', type: 'auto', outFile })
-                    await fs.writeFile(outFile, result.base64img)
-                    client.sendImageAsSticker(from, `data:${_mimetype};base64,${result.base64img}`).then(() => {
+                const result = await removeBackgroundFromImageBase64({ imageBase64, apiKey: API, size: 'auto', type: 'auto' })
+                    const imageResult = result.base64img
+                    client.sendImageAsSticker(from, imageResult).then(() => {
                     client.reply(from, 'Here\'s your sticker')
                     console.log(`Sticker Processed for ${processTime(t, moment())} Second`)
                 })
