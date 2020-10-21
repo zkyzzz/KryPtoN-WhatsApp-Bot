@@ -61,7 +61,7 @@ const start = (client = new Client()) => {
                 client.sendTextWithMentions(event.chat, `@${event.who.replace('@c.us', '')} User spammer detected, saya akan mengekick nya`)
                 .then(() => client.removeParticipant(event.chat, event.who))
             } else {
-                client.sendTextWithMentions(event.chat, `Hallo, Selamat datang di grup @${event.who.replace('@c.us', '')} \n\nSelamat bersenang-senang semua✨`)
+                client.sendTextWithMentions(event.chat, `Hallo, Selamat datang di grup @${event.who.replace('@c.us', '')} \nJangan lupa baca deskirpsi!\n\nSelamat bersenang-senang semua✨`)
             }
         }
         if (event.action === 'remove') return client.sendTextWithMentions(event.chat, `Selamat jalan user @${event.who.replace('@c.us', '')}`)

@@ -204,172 +204,327 @@ module.exports = msgHandler = async (client = new Client(), message) => {
         case 'stickergif':
         case 'gifstiker':
         case 'gifsticker': {
-            if (!isPmWhitelist) return client.reply(from, bot.error.onlyPremi, id)
-            if (isGroupMsg) return client.reply(from, bot.error.onlyPm, id)
-            if (args.length !== 1) return client.reply(from, bot.error.format, id)
-            const isGiphy = url.match(new RegExp(/https?:\/\/(www\.)?giphy.com/, 'gi'))
-            const isMediaGiphy = url.match(new RegExp(/https?:\/\/media.giphy.com\/media/, 'gi'))
-            if (isGiphy) {
-                const getGiphyCode = url.match(new RegExp(/(\/|\-)(?:.(?!(\/|\-)))+$/, 'gi'))
-                if (!getGiphyCode) { return client.reply(from, 'Gagal mengambil kode giphy', id) }
-                const giphyCode = getGiphyCode[0].replace(/[-\/]/gi, '')
-                const smallGifUrl = 'https://media.giphy.com/media/' + giphyCode + '/giphy-downsized.gif'
-                client.sendGiphyAsSticker(from, smallGifUrl).then(() => {
-                    client.reply(from, 'Here\'s your sticker')
-                    console.log(`Sticker Processed for ${processTime(t, moment())} Second`)
-                }).catch((err) => console.log(err))
-            } else if (isMediaGiphy) {
-                const gifUrl = url.match(new RegExp(/(giphy|source).(gif|mp4)/, 'gi'))
-                if (!gifUrl) { return client.reply(from, 'Gagal mengambil kode giphy', id) }
-                const smallGifUrl = url.replace(gifUrl[0], 'giphy-downsized.gif')
-                client.sendGiphyAsSticker(from, smallGifUrl).then(() => {
-                    client.reply(from, 'Here\'s your sticker')
-                    console.log(`Sticker Processed for ${processTime(t, moment())} Second`)
-                }).catch((err) => console.log(err))
-            } else {
-                await client.reply(from, 'maaf, untuk saat ini sticker gif hanya bisa menggunakan link dari giphy.  [Giphy Only]', id)
+            if (isGroupMsg) {
+                if (!isgPremiList) return client.reply(from, bot.error.onlyPremi, id)
+                if (args.length !== 1) return client.reply(from, bot.error.format, id)
+                const isGiphy = url.match(new RegExp(/https?:\/\/(www\.)?giphy.com/, 'gi'))
+                const isMediaGiphy = url.match(new RegExp(/https?:\/\/media.giphy.com\/media/, 'gi'))
+                if (isGiphy) {
+                    const getGiphyCode = url.match(new RegExp(/(\/|\-)(?:.(?!(\/|\-)))+$/, 'gi'))
+                    if (!getGiphyCode) { return client.reply(from, 'Gagal mengambil kode giphy', id) }
+                    const giphyCode = getGiphyCode[0].replace(/[-\/]/gi, '')
+                    const smallGifUrl = 'https://media.giphy.com/media/' + giphyCode + '/giphy-downsized.gif'
+                    client.sendGiphyAsSticker(from, smallGifUrl).then(() => {
+                        client.reply(from, 'Here\'s your sticker')
+                        console.log(`Sticker Processed for ${processTime(t, moment())} Second`)
+                    }).catch((err) => console.log(err))
+                } else if (isMediaGiphy) {
+                    const gifUrl = url.match(new RegExp(/(giphy|source).(gif|mp4)/, 'gi'))
+                    if (!gifUrl) { return client.reply(from, 'Gagal mengambil kode giphy', id) }
+                    const smallGifUrl = url.replace(gifUrl[0], 'giphy-downsized.gif')
+                    client.sendGiphyAsSticker(from, smallGifUrl).then(() => {
+                        client.reply(from, 'Here\'s your sticker')
+                        console.log(`Sticker Processed for ${processTime(t, moment())} Second`)
+                    }).catch((err) => console.log(err))
+                } else {
+                    await client.reply(from, 'maaf, untuk saat ini sticker gif hanya bisa menggunakan link dari giphy.  [Giphy Only]', id)
+                }
+            } else{
+                if (!isPmWhitelist) return client.reply(from, bot.error.onlyPremi, id)
+                if (args.length !== 1) return client.reply(from, bot.error.format, id)
+                const isGiphy = url.match(new RegExp(/https?:\/\/(www\.)?giphy.com/, 'gi'))
+                const isMediaGiphy = url.match(new RegExp(/https?:\/\/media.giphy.com\/media/, 'gi'))
+                if (isGiphy) {
+                    const getGiphyCode = url.match(new RegExp(/(\/|\-)(?:.(?!(\/|\-)))+$/, 'gi'))
+                    if (!getGiphyCode) { return client.reply(from, 'Gagal mengambil kode giphy', id) }
+                    const giphyCode = getGiphyCode[0].replace(/[-\/]/gi, '')
+                    const smallGifUrl = 'https://media.giphy.com/media/' + giphyCode + '/giphy-downsized.gif'
+                    client.sendGiphyAsSticker(from, smallGifUrl).then(() => {
+                        client.reply(from, 'Here\'s your sticker')
+                        console.log(`Sticker Processed for ${processTime(t, moment())} Second`)
+                    }).catch((err) => console.log(err))
+                } else if (isMediaGiphy) {
+                    const gifUrl = url.match(new RegExp(/(giphy|source).(gif|mp4)/, 'gi'))
+                    if (!gifUrl) { return client.reply(from, 'Gagal mengambil kode giphy', id) }
+                    const smallGifUrl = url.replace(gifUrl[0], 'giphy-downsized.gif')
+                    client.sendGiphyAsSticker(from, smallGifUrl).then(() => {
+                        client.reply(from, 'Here\'s your sticker')
+                        console.log(`Sticker Processed for ${processTime(t, moment())} Second`)
+                    }).catch((err) => console.log(err))
+                } else {
+                    await client.reply(from, 'maaf, untuk saat ini sticker gif hanya bisa menggunakan link dari giphy.  [Giphy Only]', id)
+                }
             }
             break
         }
         // Video Downloader
         case 'tiktok':
-            if (!isPmWhitelist) return client.reply(from, bot.error.onlyPremi, id)
-            if (isGroupMsg) return client.reply(from, bot.error.onlyPm, id)
-            if (args.length !== 1) return client.reply(from, bot.error.format, id)
-            if (!isUrl(url) && !url.includes('tiktok.com')) return client.reply(from, 'Maaf, link yang kamu kirim tidak valid. [Invalid Link]', id)
-            await client.reply(from, `_Scraping Metadata..._ \n\n${menuId.textDonasi()}`, id)
-            downloader.tiktok(url).then(async (videoMeta) => {
-                const filename = videoMeta.authorMeta.name + '.mp4'
-                const caps = `*Metadata:*\nUsername: ${videoMeta.authorMeta.name} \nMusic: ${videoMeta.musicMeta.musicName} \nView: ${videoMeta.playCount.toLocaleString()} \nLike: ${videoMeta.diggCount.toLocaleString()} \nComment: ${videoMeta.commentCount.toLocaleString()} \nShare: ${videoMeta.shareCount.toLocaleString()} \nCaption: ${videoMeta.text.trim() ? videoMeta.text : '-'}`
-                await client.sendFileFromUrl(from, videoMeta.url, filename, videoMeta.NoWaterMark ? caps : `⚠ Video tanpa watermark tidak tersedia. \n\n${caps}`, '', { headers: { 'User-Agent': 'okhttp/4.5.0', referer: 'https://www.tiktok.com/' } }, true)
-                    .then((serialized) => console.log(`Sukses Mengirim File dengan id: ${serialized} diproses selama ${processTime(t, moment())}`))
-                    .catch((err) => console.error(err))
-            }).catch(() => client.reply(from, 'Gagal mengambil metadata, link yang kamu kirim tidak valid. [Invalid Link]', id))
+            if (isGroupMsg) {
+                if (!isgPremiList) return client.reply(from, bot.error.onlyPremi, id)
+                if (args.length !== 1) return client.reply(from, bot.error.format, id)
+                if (!isUrl(url) && !url.includes('tiktok.com')) return client.reply(from, 'Maaf, link yang kamu kirim tidak valid. [Invalid Link]', id)
+                await client.reply(from, `_Scraping Metadata..._ \n\n${menuId.textDonasi()}`, id)
+                downloader.tiktok(url).then(async (videoMeta) => {
+                    const filename = videoMeta.authorMeta.name + '.mp4'
+                    const caps = `*Metadata:*\nUsername: ${videoMeta.authorMeta.name} \nMusic: ${videoMeta.musicMeta.musicName} \nView: ${videoMeta.playCount.toLocaleString()} \nLike: ${videoMeta.diggCount.toLocaleString()} \nComment: ${videoMeta.commentCount.toLocaleString()} \nShare: ${videoMeta.shareCount.toLocaleString()} \nCaption: ${videoMeta.text.trim() ? videoMeta.text : '-'}`
+                    await client.sendFileFromUrl(from, videoMeta.url, filename, videoMeta.NoWaterMark ? caps : `⚠ Video tanpa watermark tidak tersedia. \n\n${caps}`, '', { headers: { 'User-Agent': 'okhttp/4.5.0', referer: 'https://www.tiktok.com/' } }, true)
+                        .then((serialized) => console.log(`Sukses Mengirim File dengan id: ${serialized} diproses selama ${processTime(t, moment())}`))
+                        .catch((err) => console.error(err))
+                }).catch(() => client.reply(from, 'Gagal mengambil metadata, link yang kamu kirim tidak valid. [Invalid Link]', id))
+
+            } else {
+                if (!isPmWhitelist) return client.reply(from, bot.error.onlyPremi, id)
+                if (args.length !== 1) return client.reply(from, bot.error.format, id)
+                if (!isUrl(url) && !url.includes('tiktok.com')) return client.reply(from, 'Maaf, link yang kamu kirim tidak valid. [Invalid Link]', id)
+                await client.reply(from, `_Scraping Metadata..._ \n\n${menuId.textDonasi()}`, id)
+                downloader.tiktok(url).then(async (videoMeta) => {
+                    const filename = videoMeta.authorMeta.name + '.mp4'
+                    const caps = `*Metadata:*\nUsername: ${videoMeta.authorMeta.name} \nMusic: ${videoMeta.musicMeta.musicName} \nView: ${videoMeta.playCount.toLocaleString()} \nLike: ${videoMeta.diggCount.toLocaleString()} \nComment: ${videoMeta.commentCount.toLocaleString()} \nShare: ${videoMeta.shareCount.toLocaleString()} \nCaption: ${videoMeta.text.trim() ? videoMeta.text : '-'}`
+                    await client.sendFileFromUrl(from, videoMeta.url, filename, videoMeta.NoWaterMark ? caps : `⚠ Video tanpa watermark tidak tersedia. \n\n${caps}`, '', { headers: { 'User-Agent': 'okhttp/4.5.0', referer: 'https://www.tiktok.com/' } }, true)
+                        .then((serialized) => console.log(`Sukses Mengirim File dengan id: ${serialized} diproses selama ${processTime(t, moment())}`))
+                        .catch((err) => console.error(err))
+                }).catch(() => client.reply(from, 'Gagal mengambil metadata, link yang kamu kirim tidak valid. [Invalid Link]', id))
+            }
             break
         case 'ig':
         case 'instagram':
-            if (!isPmWhitelist) return client.reply(from, bot.error.onlyPremi, id)
-            if (isGroupMsg) return client.reply(from, bot.error.onlyPm, id)
-            if (args.length !== 1) return client.reply(from, bot.error.format, id)
-            if (!isUrl(url) && !url.includes('instagram.com')) return client.reply(from, 'Maaf, link yang kamu kirim tidak valid. [Invalid Link]', id)
-            await client.reply(from, `_Scraping Metadata..._ \n\n${menuId.textDonasi()}`, id)
-            downloader.insta(url).then(async (data) => {
-                if (data.type == 'GraphSidecar') {
-                    if (data.image.length != 0) {
-                        data.image.map((x) => client.sendFileFromUrl(from, x, 'photo.jpg', '', null, null, true))
+            if (isGroupMsg) {
+                if (!isgPremiList) return client.reply(from, bot.error.onlyPremi, id)
+                if (args.length !== 1) return client.reply(from, bot.error.format, id)
+                if (!isUrl(url) && !url.includes('instagram.com')) return client.reply(from, 'Maaf, link yang kamu kirim tidak valid. [Invalid Link]', id)
+                await client.reply(from, `_Scraping Metadata..._ \n\n${menuId.textDonasi()}`, id)
+                downloader.insta(url).then(async (data) => {
+                    if (data.type == 'GraphSidecar') {
+                        if (data.image.length != 0) {
+                            data.image.map((x) => client.sendFileFromUrl(from, x, 'photo.jpg', '', null, null, true))
+                                .then((serialized) => console.log(`Sukses Mengirim File dengan id: ${serialized} diproses selama ${processTime(t, moment())}`))
+                                .catch((err) => console.error(err))
+                        }
+                        if (data.video.length != 0) {
+                            data.video.map((x) => client.sendFileFromUrl(from, x.videoUrl, 'video.jpg', '', null, null, true))
+                                .then((serialized) => console.log(`Sukses Mengirim File dengan id: ${serialized} diproses selama ${processTime(t, moment())}`))
+                                .catch((err) => console.error(err))
+                        }
+                    } else if (data.type == 'GraphImage') {
+                        client.sendFileFromUrl(from, data.image, 'photo.jpg', '', null, null, true)
+                            .then((serialized) => console.log(`Sukses Mengirim File dengan id: ${serialized} diproses selama ${processTime(t, moment())}`))
+                            .catch((err) => console.error(err))
+                    } else if (data.type == 'GraphVideo') {
+                        client.sendFileFromUrl(from, data.video.videoUrl, 'video.mp4', '', null, null, true)
                             .then((serialized) => console.log(`Sukses Mengirim File dengan id: ${serialized} diproses selama ${processTime(t, moment())}`))
                             .catch((err) => console.error(err))
                     }
-                    if (data.video.length != 0) {
-                        data.video.map((x) => client.sendFileFromUrl(from, x.videoUrl, 'video.jpg', '', null, null, true))
-                            .then((serialized) => console.log(`Sukses Mengirim File dengan id: ${serialized} diproses selama ${processTime(t, moment())}`))
-                            .catch((err) => console.error(err))
-                    }
-                } else if (data.type == 'GraphImage') {
-                    client.sendFileFromUrl(from, data.image, 'photo.jpg', '', null, null, true)
-                        .then((serialized) => console.log(`Sukses Mengirim File dengan id: ${serialized} diproses selama ${processTime(t, moment())}`))
-                        .catch((err) => console.error(err))
-                } else if (data.type == 'GraphVideo') {
-                    client.sendFileFromUrl(from, data.video.videoUrl, 'video.mp4', '', null, null, true)
-                        .then((serialized) => console.log(`Sukses Mengirim File dengan id: ${serialized} diproses selama ${processTime(t, moment())}`))
-                        .catch((err) => console.error(err))
-                }
-            })
-                .catch((err) => {
-                    if (err === 'Not a video') { return client.reply(from, 'Error, tidak ada video di link yang kamu kirim. [Invalid Link]', id) }
-                    client.reply(from, 'Error, user private atau link salah [Private or Invalid Link]', id)
                 })
+                    .catch((err) => {
+                        if (err === 'Not a video') { return client.reply(from, 'Error, tidak ada video di link yang kamu kirim. [Invalid Link]', id) }
+                        client.reply(from, 'Error, user private atau link salah [Private or Invalid Link]', id)
+                    })
+            } else {
+                if (!isPmWhitelist) return client.reply(from, bot.error.onlyPremi, id)
+                if (args.length !== 1) return client.reply(from, bot.error.format, id)
+                if (!isUrl(url) && !url.includes('instagram.com')) return client.reply(from, 'Maaf, link yang kamu kirim tidak valid. [Invalid Link]', id)
+                await client.reply(from, `_Scraping Metadata..._ \n\n${menuId.textDonasi()}`, id)
+                downloader.insta(url).then(async (data) => {
+                    if (data.type == 'GraphSidecar') {
+                        if (data.image.length != 0) {
+                            data.image.map((x) => client.sendFileFromUrl(from, x, 'photo.jpg', '', null, null, true))
+                                .then((serialized) => console.log(`Sukses Mengirim File dengan id: ${serialized} diproses selama ${processTime(t, moment())}`))
+                                .catch((err) => console.error(err))
+                        }
+                        if (data.video.length != 0) {
+                            data.video.map((x) => client.sendFileFromUrl(from, x.videoUrl, 'video.jpg', '', null, null, true))
+                                .then((serialized) => console.log(`Sukses Mengirim File dengan id: ${serialized} diproses selama ${processTime(t, moment())}`))
+                                .catch((err) => console.error(err))
+                        }
+                    } else if (data.type == 'GraphImage') {
+                        client.sendFileFromUrl(from, data.image, 'photo.jpg', '', null, null, true)
+                            .then((serialized) => console.log(`Sukses Mengirim File dengan id: ${serialized} diproses selama ${processTime(t, moment())}`))
+                            .catch((err) => console.error(err))
+                    } else if (data.type == 'GraphVideo') {
+                        client.sendFileFromUrl(from, data.video.videoUrl, 'video.mp4', '', null, null, true)
+                            .then((serialized) => console.log(`Sukses Mengirim File dengan id: ${serialized} diproses selama ${processTime(t, moment())}`))
+                            .catch((err) => console.error(err))
+                    }
+                })
+                    .catch((err) => {
+                        if (err === 'Not a video') { return client.reply(from, 'Error, tidak ada video di link yang kamu kirim. [Invalid Link]', id) }
+                        client.reply(from, 'Error, user private atau link salah [Private or Invalid Link]', id)
+                    })
+            }
+            
             break
         case 'twt':
         case 'twitter':
-            if (!isPmWhitelist) return client.reply(from, bot.error.onlyPremi, id)
-            if (isGroupMsg) return client.reply(from, bot.error.onlyPm, id)
-            if (args.length !== 1) return client.reply(from, bot.error.format, id)
-            if (!isUrl(url) & !url.includes('twitter.com') || url.includes('t.co')) return client.reply(from, 'Maaf, url yang kamu kirim tidak valid. [Invalid Link]', id)
-            await client.reply(from, `_Scraping Metadata..._ \n\n${menuId.textDonasi()}`, id)
-            downloader.tweet(url).then(async (data) => {
-                if (data.type === 'video') {
-                    const content = data.variants.filter(x => x.content_type !== 'application/x-mpegURL').sort((a, b) => b.bitrate - a.bitrate)
-                    const result = await urlShortener(content[0].url)
-                    console.log('Shortlink: ' + result)
-                    await client.sendFileFromUrl(from, content[0].url, 'video.mp4', `Link Download: ${result} \n\nProcessed for ${processTime(t, moment())} _Second_`, null, null, true)
-                        .then((serialized) => console.log(`Sukses Mengirim File dengan id: ${serialized} diproses selama ${processTime(t, moment())}`))
-                        .catch((err) => console.error(err))
-                } else if (data.type === 'photo') {
-                    for (let i = 0; i < data.variants.length; i++) {
-                        await client.sendFileFromUrl(from, data.variants[i], data.variants[i].split('/media/')[1], '', null, null, true)
+            if (isGroupMsg) {
+                if (!isgPremiList) return client.reply(from, bot.error.onlyPremi, id)
+                if (args.length !== 1) return client.reply(from, bot.error.format, id)
+                if (!isUrl(url) & !url.includes('twitter.com') || url.includes('t.co')) return client.reply(from, 'Maaf, url yang kamu kirim tidak valid. [Invalid Link]', id)
+                await client.reply(from, `_Scraping Metadata..._ \n\n${menuId.textDonasi()}`, id)
+                downloader.tweet(url).then(async (data) => {
+                    if (data.type === 'video') {
+                        const content = data.variants.filter(x => x.content_type !== 'application/x-mpegURL').sort((a, b) => b.bitrate - a.bitrate)
+                        const result = await urlShortener(content[0].url)
+                        console.log('Shortlink: ' + result)
+                        await client.sendFileFromUrl(from, content[0].url, 'video.mp4', `Link Download: ${result} \n\nProcessed for ${processTime(t, moment())} _Second_`, null, null, true)
                             .then((serialized) => console.log(`Sukses Mengirim File dengan id: ${serialized} diproses selama ${processTime(t, moment())}`))
                             .catch((err) => console.error(err))
+                    } else if (data.type === 'photo') {
+                        for (let i = 0; i < data.variants.length; i++) {
+                            await client.sendFileFromUrl(from, data.variants[i], data.variants[i].split('/media/')[1], '', null, null, true)
+                                .then((serialized) => console.log(`Sukses Mengirim File dengan id: ${serialized} diproses selama ${processTime(t, moment())}`))
+                                .catch((err) => console.error(err))
+                        }
                     }
-                }
-            })
-                .catch(() => client.sendText(from, 'Maaf, link tidak valid atau tidak ada media di link yang kamu kirim. [Invalid Link]'))
+                }).catch(() => client.sendText(from, 'Maaf, link tidak valid atau tidak ada media di link yang kamu kirim. [Invalid Link]'))
+            } else {
+                if (!isPmWhitelist) return client.reply(from, bot.error.onlyPremi, id)
+                if (args.length !== 1) return client.reply(from, bot.error.format, id)
+                if (!isUrl(url) & !url.includes('twitter.com') || url.includes('t.co')) return client.reply(from, 'Maaf, url yang kamu kirim tidak valid. [Invalid Link]', id)
+                await client.reply(from, `_Scraping Metadata..._ \n\n${menuId.textDonasi()}`, id)
+                downloader.tweet(url).then(async (data) => {
+                    if (data.type === 'video') {
+                        const content = data.variants.filter(x => x.content_type !== 'application/x-mpegURL').sort((a, b) => b.bitrate - a.bitrate)
+                        const result = await urlShortener(content[0].url)
+                        console.log('Shortlink: ' + result)
+                        await client.sendFileFromUrl(from, content[0].url, 'video.mp4', `Link Download: ${result} \n\nProcessed for ${processTime(t, moment())} _Second_`, null, null, true)
+                            .then((serialized) => console.log(`Sukses Mengirim File dengan id: ${serialized} diproses selama ${processTime(t, moment())}`))
+                            .catch((err) => console.error(err))
+                    } else if (data.type === 'photo') {
+                        for (let i = 0; i < data.variants.length; i++) {
+                            await client.sendFileFromUrl(from, data.variants[i], data.variants[i].split('/media/')[1], '', null, null, true)
+                                .then((serialized) => console.log(`Sukses Mengirim File dengan id: ${serialized} diproses selama ${processTime(t, moment())}`))
+                                .catch((err) => console.error(err))
+                        }
+                    }
+                }).catch(() => client.sendText(from, 'Maaf, link tidak valid atau tidak ada media di link yang kamu kirim. [Invalid Link]'))
+            }
             break
         case 'fb':
         case 'facebook':
-            if (!isPmWhitelist) return client.reply(from, bot.error.onlyPremi, id)
-            if (isGroupMsg) return client.reply(from, bot.error.onlyPm, id)
-            if (args.length !== 1) return client.reply(from, bot.error.format, id)
-            if (!isUrl(url) && !url.includes('facebook.com')) return client.reply(from, 'Maaf, url yang kamu kirim tidak valid. [Invalid Link]', id)
-            await client.reply(from, bot.wait, id)
-            downloader.facebook(url).then(async (videoMeta) => {
-                const title = videoMeta.response.title
-                const thumbnail = videoMeta.response.thumbnail
-                const links = videoMeta.response.links
-                const shorts = []
-                for (let i = 0; i < links.length; i++) {
-                    const shortener = await urlShortener(links[i].url)
-                    console.log('Shortlink: ' + shortener)
-                    links[i].short = shortener
-                    shorts.push(links[i])
-                }
-                const link = shorts.map((x) => `${x.resolution} Quality: ${x.short}`)
-                const caption = `Text: ${title} \n\nLink Download: \n${link.join('\n')} \n\nProcessed for ${processTime(t, moment())} _Second_`
-                await client.sendFileFromUrl(from, thumbnail, 'videos.jpg', caption, null, null, true)
-                    .then((serialized) => console.log(`Sukses Mengirim File dengan id: ${serialized} diproses selama ${processTime(t, moment())}`))
-                    .catch((err) => console.error(err))
-            })
-                .catch((err) => client.reply(from, `Error, url tidak valid atau tidak memuat video. [Invalid Link or No Video] \n\n${err}`, id))
+            if (isGroupMsg) {
+                if (!isgPremiList) return client.reply(from, bot.error.onlyPremi, id)
+                if (args.length !== 1) return client.reply(from, bot.error.format, id)
+                if (!isUrl(url) && !url.includes('facebook.com')) return client.reply(from, 'Maaf, url yang kamu kirim tidak valid. [Invalid Link]', id)
+                await client.reply(from, bot.wait, id)
+                downloader.facebook(url).then(async (videoMeta) => {
+                    const title = videoMeta.response.title
+                    const thumbnail = videoMeta.response.thumbnail
+                    const links = videoMeta.response.links
+                    const shorts = []
+                    for (let i = 0; i < links.length; i++) {
+                        const shortener = await urlShortener(links[i].url)
+                        console.log('Shortlink: ' + shortener)
+                        links[i].short = shortener
+                        shorts.push(links[i])
+                    }
+                    const link = shorts.map((x) => `${x.resolution} Quality: ${x.short}`)
+                    const caption = `Text: ${title} \n\nLink Download: \n${link.join('\n')} \n\nProcessed for ${processTime(t, moment())} _Second_`
+                    await client.sendFileFromUrl(from, thumbnail, 'videos.jpg', caption, null, null, true)
+                        .then((serialized) => console.log(`Sukses Mengirim File dengan id: ${serialized} diproses selama ${processTime(t, moment())}`))
+                        .catch((err) => console.error(err))
+                }).catch((err) => client.reply(from, `Error, url tidak valid atau tidak memuat video. [Invalid Link or No Video] \n\n${err}`, id))
+            } else {
+                if (!isPmWhitelist) return client.reply(from, bot.error.onlyPremi, id)
+                if (args.length !== 1) return client.reply(from, bot.error.format, id)
+                if (!isUrl(url) && !url.includes('facebook.com')) return client.reply(from, 'Maaf, url yang kamu kirim tidak valid. [Invalid Link]', id)
+                await client.reply(from, bot.wait, id)
+                downloader.facebook(url).then(async (videoMeta) => {
+                    const title = videoMeta.response.title
+                    const thumbnail = videoMeta.response.thumbnail
+                    const links = videoMeta.response.links
+                    const shorts = []
+                    for (let i = 0; i < links.length; i++) {
+                        const shortener = await urlShortener(links[i].url)
+                        console.log('Shortlink: ' + shortener)
+                        links[i].short = shortener
+                        shorts.push(links[i])
+                    }
+                    const link = shorts.map((x) => `${x.resolution} Quality: ${x.short}`)
+                    const caption = `Text: ${title} \n\nLink Download: \n${link.join('\n')} \n\nProcessed for ${processTime(t, moment())} _Second_`
+                    await client.sendFileFromUrl(from, thumbnail, 'videos.jpg', caption, null, null, true)
+                        .then((serialized) => console.log(`Sukses Mengirim File dengan id: ${serialized} diproses selama ${processTime(t, moment())}`))
+                        .catch((err) => console.error(err))
+                })
+                    .catch((err) => client.reply(from, `Error, url tidak valid atau tidak memuat video. [Invalid Link or No Video] \n\n${err}`, id))
+            }
             break
         case 'ytmp3':
-            if (!isPmWhitelist) return client.reply(from, bot.error.onlyPremi, id)
-            if (isGroupMsg) return client.reply(from, bot.error.onlyPm, id)
-            if (args.length !== 1) return client.reply(from, bot.error.format, id)
-            if (!isUrl(url) && !url.includes('youtube.com')) return client.reply(from, 'Maaf, url yang kamu kirim tidak valid. [Invalid Link]', id)
-            await client.reply(from, bot.wait, id)
-            downloader.ytmp3(url).then(async (ytMeta) => {
-                const title = ytMeta.title
-                const thumbnail = ytMeta.thumb
-                const links = ytMeta.result
-                const filesize = ytMeta.filesize
-                const status = ytMeta.status
-                if ( status !== 200) client.reply(from, 'Maaf, link anda tidak valid.', id)
-                if (Number(filesize.split(' MB')[0]) >= 10.00) return reject('Maaf durasi video sudah melebihi batas maksimal !')
-                client.sendFileFromUrl(from, thumbnail, 'thumbnail.jpg', `Judul: ${title}\nUkuran File: ${filesize}\n\nSilakan di tunggu lagi proses boss....`, null, true)
-                await client.sendFileFromUrl(from, links, `${title}.mp3`, null, null, true)
-                .catch(() => client.reply(from, 'Terjadi kesalahan mungkin link yang anda kirim tidak valid!', id))
+            if (isGroupMsg) {
+                if (!isgPremiList) return client.reply(from, bot.error.onlyPremi, id)
+                if (args.length !== 1) return client.reply(from, bot.error.format, id)
+                if (!isUrl(url) && !url.includes('youtube.com')) return client.reply(from, 'Maaf, url yang kamu kirim tidak valid. [Invalid Link]', id)
+                await client.reply(from, bot.wait, id)
+                downloader.ytmp3(url).then(async (ytMeta) => {
+                    const title = ytMeta.title
+                    const thumbnail = ytMeta.thumb
+                    const links = ytMeta.result
+                    const filesize = ytMeta.filesize
+                    const status = ytMeta.status
+                    if ( status !== 200) client.reply(from, 'Maaf, link anda tidak valid.', id)
+                    if (Number(filesize.split(' MB')[0]) >= 10.00) return reject('Maaf durasi video sudah melebihi batas maksimal !')
+                    client.sendFileFromUrl(from, thumbnail, 'thumbnail.jpg', `Judul: ${title}\nUkuran File: ${filesize}\n\nSilakan di tunggu lagi proses boss....`, null, true)
+                    await client.sendFileFromUrl(from, links, `${title}.mp3`, null, null, true)
+                    .catch(() => client.reply(from, 'Terjadi kesalahan mungkin link yang anda kirim tidak valid!', id))
 
-            })
+                })
+            } else {
+                if (!isPmWhitelist) return client.reply(from, bot.error.onlyPremi, id)
+                if (args.length !== 1) return client.reply(from, bot.error.format, id)
+                if (!isUrl(url) && !url.includes('youtube.com')) return client.reply(from, 'Maaf, url yang kamu kirim tidak valid. [Invalid Link]', id)
+                await client.reply(from, bot.wait, id)
+                downloader.ytmp3(url).then(async (ytMeta) => {
+                    const title = ytMeta.title
+                    const thumbnail = ytMeta.thumb
+                    const links = ytMeta.result
+                    const filesize = ytMeta.filesize
+                    const status = ytMeta.status
+                    if ( status !== 200) client.reply(from, 'Maaf, link anda tidak valid.', id)
+                    if (Number(filesize.split(' MB')[0]) >= 10.00) return reject('Maaf durasi video sudah melebihi batas maksimal !')
+                    client.sendFileFromUrl(from, thumbnail, 'thumbnail.jpg', `Judul: ${title}\nUkuran File: ${filesize}\n\nSilakan di tunggu lagi proses boss....`, null, true)
+                    await client.sendFileFromUrl(from, links, `${title}.mp3`, null, null, true)
+                    .catch(() => client.reply(from, 'Terjadi kesalahan mungkin link yang anda kirim tidak valid!', id))
+
+                })
+            }
             break
         case 'ytmp4' :
-            if (!isPmWhitelist) return client.reply(from, bot.error.onlyPremi, id)
-            if (isGroupMsg) return client.reply(from, bot.error.onlyPm, id)
-            if (args.length !== 1) return client.reply(from, bot.error.format, id)
-            if (!isUrl(url) && !url.includes('youtube.com')) return client.reply(from, 'Maaf, url yang kamu kirim tidak valid. [Invalid Link]', id)
-            await client.reply(from, bot.wait, id)
-            downloader.ytmp4(url).then(async (ytMetav) => {
-                const title = ytMetav.title
-                const thumbnail = ytMetav.thumb
-                const links = ytMetav.result
-                const filesize = ytMetav.filesize
-                const res = ytMetav.resolution
-                const status = ytMetav.status
-                if ( status !== 200) client.reply(from, 'Maaf, link anda tidak valid.', id)
-                if (Number(filesize.split(' MB')[0]) >= 25.00) return reject('Maaf durasi video sudah melebihi batas maksimal !')
-                client.sendFileFromUrl(from, thumbnail, 'thumbnail.jpg', `Judul: ${title}\nUkuran File: ${filesize}\nResolusi: ${res}\n\nSilakan di tunggu lagi proses boss....`, null, true)
-                await client.sendFileFromUrl(from, links, `${title}.mp4`, null, null, true)
-                .catch(() => client.reply(from, 'Terjadi kesalahan mungkin link yang anda kirim tidak valid!', id))
-          })
+            if (isGroupMsg) {
+                if (!isgPremiList) return client.reply(from, bot.error.onlyPremi, id)
+                if (args.length !== 1) return client.reply(from, bot.error.format, id)
+                if (!isUrl(url) && !url.includes('youtube.com')) return client.reply(from, 'Maaf, url yang kamu kirim tidak valid. [Invalid Link]', id)
+                await client.reply(from, bot.wait, id)
+                downloader.ytmp4(url).then(async (ytMetav) => {
+                    const title = ytMetav.title
+                    const thumbnail = ytMetav.thumb
+                    const links = ytMetav.result
+                    const filesize = ytMetav.filesize
+                    const res = ytMetav.resolution
+                    const status = ytMetav.status
+                    if ( status !== 200) client.reply(from, 'Maaf, link anda tidak valid.', id)
+                    if (Number(filesize.split(' MB')[0]) >= 25.00) return reject('Maaf durasi video sudah melebihi batas maksimal !')
+                    client.sendFileFromUrl(from, thumbnail, 'thumbnail.jpg', `Judul: ${title}\nUkuran File: ${filesize}\nResolusi: ${res}\n\nSilakan di tunggu lagi proses boss....`, null, true)
+                    await client.sendFileFromUrl(from, links, `${title}.mp4`, null, null, true)
+                    .catch(() => client.reply(from, 'Terjadi kesalahan mungkin link yang anda kirim tidak valid!', id))
+                })
+            } else {
+                if (!isPmWhitelist) return client.reply(from, bot.error.onlyPremi, id)
+                if (args.length !== 1) return client.reply(from, bot.error.format, id)
+                if (!isUrl(url) && !url.includes('youtube.com')) return client.reply(from, 'Maaf, url yang kamu kirim tidak valid. [Invalid Link]', id)
+                await client.reply(from, bot.wait, id)
+                downloader.ytmp4(url).then(async (ytMetav) => {
+                    const title = ytMetav.title
+                    const thumbnail = ytMetav.thumb
+                    const links = ytMetav.result
+                    const filesize = ytMetav.filesize
+                    const res = ytMetav.resolution
+                    const status = ytMetav.status
+                    if ( status !== 200) client.reply(from, 'Maaf, link anda tidak valid.', id)
+                    if (Number(filesize.split(' MB')[0]) >= 25.00) return reject('Maaf durasi video sudah melebihi batas maksimal !')
+                    client.sendFileFromUrl(from, thumbnail, 'thumbnail.jpg', `Judul: ${title}\nUkuran File: ${filesize}\nResolusi: ${res}\n\nSilakan di tunggu lagi proses boss....`, null, true)
+                    await client.sendFileFromUrl(from, links, `${title}.mp4`, null, null, true)
+                    .catch(() => client.reply(from, 'Terjadi kesalahan mungkin link yang anda kirim tidak valid!', id))
+                })
+            }
           break
         // Education Command
         case 'brainly':

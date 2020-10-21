@@ -120,11 +120,11 @@ Penggunaan: kirim pesan dengan format *!ig https://www.instagram.com/p/BPOd1vhDM
 Untuk mengunduh photo dan video dari Twitter.
 Penggunaan: kirim pesan dengan format *!twt https://twitter.com/ntsana_/status/1306108656887324672*
 
-5. *!ytmp3* _<twitter post url>_
+5. *!ytmp3* _<yt video url>_
 Untuk mengunduh musik dari Youtube.
 Penggunaan: kirim pesan dengan format *!ytmp3 https://youtu.be/cIYdfWFsMXw*
 
-6. *!ytmp4* _<twitter post url>_
+6. *!ytmp4* _<yt video url>_
 Untuk mengunduh video dari Youtube.
 Penggunaan: kirim pesan dengan format *!ytmp4 https://youtu.be/cIYdfWFsMXw*
 
