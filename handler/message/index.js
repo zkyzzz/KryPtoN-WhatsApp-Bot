@@ -103,7 +103,7 @@ module.exports = msgHandler = async (client = new Client(), message) => {
             break
         case 'premium':
             if (!isPmWhitelist) return client.reply(from, bot.error.onlyPremi, id)
-            await client.sendText(from, menuId.textPremi())
+            await client.sendText(from, menuId.textPremi(pushname))
             break
         case 'donate':
         case 'donasi':
@@ -524,7 +524,7 @@ module.exports = msgHandler = async (client = new Client(), message) => {
             client.sendText(from, 'premium member')
             break
         case 'premiumlink':
-            client.sendText(from, menuId.textLinkPremium)
+            client.sendText(from, menuId.textLinkPremium())
             break
         default:
             console.log(color('[ERROR]', 'red'), color(moment(t * 1000).format('DD/MM/YY HH:mm:ss'), 'yellow'), 'Unregistered Command from', color(pushname))
