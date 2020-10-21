@@ -37,6 +37,10 @@ module.exports = msgHandler = async (client = new Client(), message) => {
         const ownerNumber = `${no}@c.us`
         const isOwner = sender.id == ownerNumber
 
+        // Bot Group
+        var botGroup = process.env.BOT_GROUP
+        const isBotGroup = botGroup.includes(groupId)
+
         // Bot Prefix
         const prefix = '!'
         body = (type === 'chat' && body.startsWith(prefix)) ? body : ((type === 'image' && caption) && caption.startsWith(prefix)) ? caption : ''
@@ -604,39 +608,74 @@ module.exports = msgHandler = async (client = new Client(), message) => {
             break
         // Group Commands (group admin only)
         case 'kick':
-            if (!isgPremiList) return client.reply(from, bot.error.onlyPremi, id)
-            if (!isGroupMsg) return client.reply(from, 'Maaf, perintah ini hanya dapat dipakai didalam grup! [Group Only]', id)
-            if (!isGroupAdmins) return client.reply(from, bot.error.notAdmin, id)
-            if (!isBotGroupAdmins) return client.reply(from, bot.error.botNotAdmin, id)
-            if (mentionedJidList.length === 0) return client.reply(from, bot.error.format, id)
-            if (mentionedJidList[0] === botNumber) return await client.reply(from, bot.error.format, id)
-            await client.sendTextWithMentions(from, `Request diterima, mengeluarkan:\n${mentionedJidList.map(x => `@${x.replace('@c.us', '')}`).join('\n')}`)
-            for (let i = 0; i < mentionedJidList.length; i++) {
-                if (groupAdmins.includes(mentionedJidList[i])) return await client.sendText(from, 'Gagal, kamu tidak bisa mengeluarkan admin grup.')
-                await client.removeParticipant(groupId, mentionedJidList[i])
+            if (isBotGroup) {
+                if (!isGroupMsg) return client.reply(from, 'Maaf, perintah ini hanya dapat dipakai didalam grup! [Group Only]', id)
+                if (!isGroupAdmins) return client.reply(from, bot.error.notAdmin, id)
+                if (!isBotGroupAdmins) return client.reply(from, bot.error.botNotAdmin, id)
+                if (mentionedJidList.length === 0) return client.reply(from, bot.error.format, id)
+                if (mentionedJidList[0] === botNumber) return await client.reply(from, bot.error.format, id)
+                await client.sendTextWithMentions(from, `Request diterima, mengeluarkan:\n${mentionedJidList.map(x => `@${x.replace('@c.us', '')}`).join('\n')}`)
+                for (let i = 0; i < mentionedJidList.length; i++) {
+                    if (groupAdmins.includes(mentionedJidList[i])) return await client.sendText(from, 'Gagal, kamu tidak bisa mengeluarkan admin grup.')
+                    await client.removeParticipant(groupId, mentionedJidList[i])
+                }
+            } else {
+                if (!isgPremiList) return client.reply(from, bot.error.onlyPremi, id)
+                if (!isGroupMsg) return client.reply(from, 'Maaf, perintah ini hanya dapat dipakai didalam grup! [Group Only]', id)
+                if (!isGroupAdmins) return client.reply(from, bot.error.notAdmin, id)
+                if (!isBotGroupAdmins) return client.reply(from, bot.error.botNotAdmin, id)
+                if (mentionedJidList.length === 0) return client.reply(from, bot.error.format, id)
+                if (mentionedJidList[0] === botNumber) return await client.reply(from, bot.error.format, id)
+                await client.sendTextWithMentions(from, `Request diterima, mengeluarkan:\n${mentionedJidList.map(x => `@${x.replace('@c.us', '')}`).join('\n')}`)
+                for (let i = 0; i < mentionedJidList.length; i++) {
+                    if (groupAdmins.includes(mentionedJidList[i])) return await client.sendText(from, 'Gagal, kamu tidak bisa mengeluarkan admin grup.')
+                    await client.removeParticipant(groupId, mentionedJidList[i])
+                }
             }
             break
         case 'promote':
-            if (!isgPremiList) return client.reply(from, bot.error.onlyPremi, id)
-            if (!isGroupMsg) return await client.reply(from, 'Maaf, perintah ini hanya dapat dipakai didalam grup! [Group Only]', id)
-            if (!isGroupAdmins) return await client.reply(from, bot.error.notAdmin, id)
-            if (!isBotGroupAdmins) return await client.reply(from, bot.error.botNotAdmin, id)
-            if (mentionedJidList.length != 1) return client.reply(from, 'Maaf, format pesan salah silahkan periksa menu. [Wrong Format, Only 1 user]', id)
-            if (groupAdmins.includes(mentionedJidList[0])) return await client.reply(from, 'Maaf, user tersebut sudah menjadi admin. [Bot is Admin]', id)
-            if (mentionedJidList[0] === botNumber) return await client.reply(from, bot.error.format, id)
-            await client.promoteParticipant(groupId, mentionedJidList[0])
-            await client.sendTextWithMentions(from, `Request diterima, menambahkan @${mentionedJidList[0].replace('@c.us', '')} sebagai admin.`)
+            if (isBotGroup) {
+                if (!isGroupMsg) return await client.reply(from, 'Maaf, perintah ini hanya dapat dipakai didalam grup! [Group Only]', id)
+                if (!isGroupAdmins) return await client.reply(from, bot.error.notAdmin, id)
+                if (!isBotGroupAdmins) return await client.reply(from, bot.error.botNotAdmin, id)
+                if (mentionedJidList.length != 1) return client.reply(from, 'Maaf, format pesan salah silahkan periksa menu. [Wrong Format, Only 1 user]', id)
+                if (groupAdmins.includes(mentionedJidList[0])) return await client.reply(from, 'Maaf, user tersebut sudah menjadi admin. [Bot is Admin]', id)
+                if (mentionedJidList[0] === botNumber) return await client.reply(from, bot.error.format, id)
+                await client.promoteParticipant(groupId, mentionedJidList[0])
+                await client.sendTextWithMentions(from, `Request diterima, menambahkan @${mentionedJidList[0].replace('@c.us', '')} sebagai admin.`)
+            } else {
+                if (!isgPremiList) return client.reply(from, bot.error.onlyPremi, id)
+                if (!isGroupMsg) return await client.reply(from, 'Maaf, perintah ini hanya dapat dipakai didalam grup! [Group Only]', id)
+                if (!isGroupAdmins) return await client.reply(from, bot.error.notAdmin, id)
+                if (!isBotGroupAdmins) return await client.reply(from, bot.error.botNotAdmin, id)
+                if (mentionedJidList.length != 1) return client.reply(from, 'Maaf, format pesan salah silahkan periksa menu. [Wrong Format, Only 1 user]', id)
+                if (groupAdmins.includes(mentionedJidList[0])) return await client.reply(from, 'Maaf, user tersebut sudah menjadi admin. [Bot is Admin]', id)
+                if (mentionedJidList[0] === botNumber) return await client.reply(from, bot.error.format, id)
+                await client.promoteParticipant(groupId, mentionedJidList[0])
+                await client.sendTextWithMentions(from, `Request diterima, menambahkan @${mentionedJidList[0].replace('@c.us', '')} sebagai admin.`)
+            }
             break
         case 'demote':
-            if (!isgPremiList) return client.reply(from, bot.error.onlyPremi, id)
-            if (!isGroupMsg) return client.reply(from, 'Maaf, perintah ini hanya dapat dipakai didalam grup! [Group Only]', id)
-            if (!isGroupAdmins) return client.reply(from, bot.error.notAdmin, id)
-            if (!isBotGroupAdmins) return client.reply(from, bot.error.botNotAdmin, id)
-            if (mentionedJidList.length !== 1) return client.reply(from, 'Maaf, format pesan salah silahkan periksa menu. [Wrong Format, Only 1 user]', id)
-            if (!groupAdmins.includes(mentionedJidList[0])) return await client.reply(from, 'Maaf, user tersebut tidak menjadi admin. [user not Admin]', id)
-            if (mentionedJidList[0] === botNumber) return await client.reply(from, bot.error.format, id)
-            await client.demoteParticipant(groupId, mentionedJidList[0])
-            await client.sendTextWithMentions(from, `Request diterima, menghapus jabatan @${mentionedJidList[0].replace('@c.us', '')}.`)
+            if (isBotGroup) {
+                if (!isGroupMsg) return client.reply(from, 'Maaf, perintah ini hanya dapat dipakai didalam grup! [Group Only]', id)
+                if (!isGroupAdmins) return client.reply(from, bot.error.notAdmin, id)
+                if (!isBotGroupAdmins) return client.reply(from, bot.error.botNotAdmin, id)
+                if (mentionedJidList.length !== 1) return client.reply(from, 'Maaf, format pesan salah silahkan periksa menu. [Wrong Format, Only 1 user]', id)
+                if (!groupAdmins.includes(mentionedJidList[0])) return await client.reply(from, 'Maaf, user tersebut tidak menjadi admin. [user not Admin]', id)
+                if (mentionedJidList[0] === botNumber) return await client.reply(from, bot.error.format, id)
+                await client.demoteParticipant(groupId, mentionedJidList[0])
+                await client.sendTextWithMentions(from, `Request diterima, menghapus jabatan @${mentionedJidList[0].replace('@c.us', '')}.`)
+            } else {
+                if (!isgPremiList) return client.reply(from, bot.error.onlyPremi, id)
+                if (!isGroupMsg) return client.reply(from, 'Maaf, perintah ini hanya dapat dipakai didalam grup! [Group Only]', id)
+                if (!isGroupAdmins) return client.reply(from, bot.error.notAdmin, id)
+                if (!isBotGroupAdmins) return client.reply(from, bot.error.botNotAdmin, id)
+                if (mentionedJidList.length !== 1) return client.reply(from, 'Maaf, format pesan salah silahkan periksa menu. [Wrong Format, Only 1 user]', id)
+                if (!groupAdmins.includes(mentionedJidList[0])) return await client.reply(from, 'Maaf, user tersebut tidak menjadi admin. [user not Admin]', id)
+                if (mentionedJidList[0] === botNumber) return await client.reply(from, bot.error.format, id)
+                await client.demoteParticipant(groupId, mentionedJidList[0])
+                await client.sendTextWithMentions(from, `Request diterima, menghapus jabatan @${mentionedJidList[0].replace('@c.us', '')}.`)
+            }
             break
         case 'bye':
             if (!isGroupMsg) return client.reply(from, 'Maaf, perintah ini hanya dapat dipakai didalam grup! [Group Only]', id)
@@ -651,25 +690,48 @@ module.exports = msgHandler = async (client = new Client(), message) => {
             break
         case 'tagall':
         case 'everyone':
-            if (!isgPremiList) return client.reply(from, bot.error.onlyPremi, id)
-            if (!isGroupMsg) return client.reply(from, 'Maaf, perintah ini hanya dapat dipakai didalam grup! [Group Only]', id)
-            if (!isGroupAdmins) return client.reply(from, bot.error.notAdmin, id)
-            const members = await client.getGroupMembers(groupId)
-            let textMention = 'Mention All\n'
-            for (let i = 0; i < members.length; i++) {
-                textMention += ` @${members[i].id.replace(/@c.us/g, '')}\n`
+            if (isBotGroup) {
+                if (!isGroupMsg) return client.reply(from, 'Maaf, perintah ini hanya dapat dipakai didalam grup! [Group Only]', id)
+                if (!isGroupAdmins) return client.reply(from, bot.error.notAdmin, id)
+                const members = await client.getGroupMembers(groupId)
+                let textMention = 'Mention All\n'
+                for (let i = 0; i < members.length; i++) {
+                    textMention += ` @${members[i].id.replace(/@c.us/g, '')}\n`
+                }
+                await sleep(2000)
+                await client.sendTextWithMentions(from, textMention)
+            } else {
+                if (!isgPremiList) return client.reply(from, bot.error.onlyPremi, id)
+                if (!isGroupMsg) return client.reply(from, 'Maaf, perintah ini hanya dapat dipakai didalam grup! [Group Only]', id)
+                if (!isGroupAdmins) return client.reply(from, bot.error.notAdmin, id)
+                const members = await client.getGroupMembers(groupId)
+                let textMention = 'Mention All\n'
+                for (let i = 0; i < members.length; i++) {
+                    textMention += ` @${members[i].id.replace(/@c.us/g, '')}\n`
+                }
+                await sleep(2000)
+                await client.sendTextWithMentions(from, textMention)
             }
-            await sleep(2000)
-            await client.sendTextWithMentions(from, textMention)
             break
         case 'add':
-            if (!isGroupMsg) return await client.reply(from, 'Maaf, perintah ini hanya dapat dipakai didalam grup! [Group Only]', id)
-            if (!isGroupAdmins) return await client.reply(from, bot.error.notAdmin, id)
-            if (!isBotGroupAdmins) return await client.reply(from, bot.error.botNotAdmin, id)
-            if (args.length !== 1) return client.reply(from, 'Untuk menggunakan fitur ini, kirim perintah *!add* 628xxxxx', id)
-            const orang = args[0]
-            await client.addParticipant(from, `${orang}@c.us`)
-                        .catch(() => client.reply(from, 'Tidak dapat menambahkan, mungkin nomer salah', id))
+            if (isBotGroup) {
+                if (!isGroupMsg) return await client.reply(from, 'Maaf, perintah ini hanya dapat dipakai didalam grup! [Group Only]', id)
+                if (!isGroupAdmins) return await client.reply(from, bot.error.notAdmin, id)
+                if (!isBotGroupAdmins) return await client.reply(from, bot.error.botNotAdmin, id)
+                if (args.length !== 1) return client.reply(from, 'Untuk menggunakan fitur ini, kirim perintah *!add* 628xxxxx', id)
+                const orang = args[0]
+                await client.addParticipant(from, `${orang}@c.us`)
+                            .catch(() => client.reply(from, 'Tidak dapat menambahkan, mungkin nomer salah', id))
+            } else {
+                if (!isgPremiList) return client.reply(from, bot.error.onlyPremi, id)
+                if (!isGroupMsg) return await client.reply(from, 'Maaf, perintah ini hanya dapat dipakai didalam grup! [Group Only]', id)
+                if (!isGroupAdmins) return await client.reply(from, bot.error.notAdmin, id)
+                if (!isBotGroupAdmins) return await client.reply(from, bot.error.botNotAdmin, id)
+                if (args.length !== 1) return client.reply(from, 'Untuk menggunakan fitur ini, kirim perintah *!add* 628xxxxx', id)
+                const orang = args[0]
+                await client.addParticipant(from, `${orang}@c.us`)
+                            .catch(() => client.reply(from, 'Tidak dapat menambahkan, mungkin nomer salah', id))
+            }
             break
         case 'gid':
             if (!isGroupMsg) return await client.reply(from, 'Maaf, perintah ini hanya dapat dipakai didalam grup! [Group Only]', id)
