@@ -51,7 +51,7 @@ module.exports = msgHandler = async (client = new Client(), message) => {
 
         // Error message
         const bot = {
-            wait: '_Scraping Metadata..._ \n\nTerimakasih telah menggunakan bot ini, kamu dapat membantu pengembangan bot ini dengan menyawer melalui https://saweria.co/donate/Kry9toN \nTerimakasih.',
+            wait: '_Scraping Metadata..._',
             error: {
                 notGroup: 'Maaf, perintah ini hanya dapat dipakai didalam grup! [Group Only]',
                 format: 'Maaf, format pesan salah silahkan periksa menu. [Wrong Format]',
@@ -93,7 +93,7 @@ module.exports = msgHandler = async (client = new Client(), message) => {
             break
         case 'update':
         case 'channel':
-            await client.reply(from, 'Cek update/news bot di channel BLOG telegram saya\nhttps://t.me/kryptonblog', id)
+            await client.reply(from, 'Cek update/news bot di channel BLOG telegram saya\nhttps://chat.whatsapp.com/DAWsRFyVOyyEGZRZfLdzVP', id)
             break
         case 'menuadmin':
             if (!isGroupMsg) return client.reply(from, bot.error.notGroup, id)
