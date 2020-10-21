@@ -26,14 +26,14 @@ module.exports = msgHandler = async (client = new Client(), message) => {
         const isBotGroupAdmins = groupAdmins.includes(botNumber) || false
 
         // White list
-        const pmWhiteList = process.env.PM_WHITE_LIST
+        var pmWhiteList = process.env.PM_WHITE_LIST
         const isPmWhitelist = pmWhiteList.includes(sender.id)
 
-        const gPremiList = process.env.G_PREMI_LIST
+        var gPremiList = process.env.G_PREMI_LIST
         const isgPremiList = gPremiList.includes(groupId)
 
         // Own Prefix
-        const no = process.env.OWNER_PHONE
+        var no = process.env.OWNER_PHONE
         const ownerNumber = `${no}@c.us`
         const isOwner = sender.id == ownerNumber
 
