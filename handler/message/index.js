@@ -150,6 +150,7 @@ module.exports = msgHandler = async (client = new Client(), message) => {
         case 'stickergif':
         case 'gifstiker':
         case 'gifsticker': {
+            if (!isPmWhitelist) return client.reply(from, bot.error.onlyPremi, id)
             if (args.length !== 1) return client.reply(from, bot.error.format, id)
             const isGiphy = url.match(new RegExp(/https?:\/\/(www\.)?giphy.com/, 'gi'))
             const isMediaGiphy = url.match(new RegExp(/https?:\/\/media.giphy.com\/media/, 'gi'))
@@ -177,6 +178,7 @@ module.exports = msgHandler = async (client = new Client(), message) => {
         }
         // Video Downloader
         case 'tiktok':
+            if (!isPmWhitelist) return client.reply(from, bot.error.onlyPremi, id)
             if (args.length !== 1) return client.reply(from, bot.error.format, id)
             if (!isUrl(url) && !url.includes('tiktok.com')) return client.reply(from, 'Maaf, link yang kamu kirim tidak valid. [Invalid Link]', id)
             await client.reply(from, `_Scraping Metadata..._ \n\n${menuId.textDonasi()}`, id)
@@ -190,6 +192,7 @@ module.exports = msgHandler = async (client = new Client(), message) => {
             break
         case 'ig':
         case 'instagram':
+            if (!isPmWhitelist) return client.reply(from, bot.error.onlyPremi, id)
             if (args.length !== 1) return client.reply(from, bot.error.format, id)
             if (!isUrl(url) && !url.includes('instagram.com')) return client.reply(from, 'Maaf, link yang kamu kirim tidak valid. [Invalid Link]', id)
             await client.reply(from, `_Scraping Metadata..._ \n\n${menuId.textDonasi()}`, id)
@@ -222,6 +225,7 @@ module.exports = msgHandler = async (client = new Client(), message) => {
             break
         case 'twt':
         case 'twitter':
+            if (!isPmWhitelist) return client.reply(from, bot.error.onlyPremi, id)
             if (args.length !== 1) return client.reply(from, bot.error.format, id)
             if (!isUrl(url) & !url.includes('twitter.com') || url.includes('t.co')) return client.reply(from, 'Maaf, url yang kamu kirim tidak valid. [Invalid Link]', id)
             await client.reply(from, `_Scraping Metadata..._ \n\n${menuId.textDonasi()}`, id)
@@ -245,6 +249,7 @@ module.exports = msgHandler = async (client = new Client(), message) => {
             break
         case 'fb':
         case 'facebook':
+            if (!isPmWhitelist) return client.reply(from, bot.error.onlyPremi, id)
             if (args.length !== 1) return client.reply(from, bot.error.format, id)
             if (!isUrl(url) && !url.includes('facebook.com')) return client.reply(from, 'Maaf, url yang kamu kirim tidak valid. [Invalid Link]', id)
             await client.reply(from, bot.wait, id)
@@ -268,6 +273,7 @@ module.exports = msgHandler = async (client = new Client(), message) => {
                 .catch((err) => client.reply(from, `Error, url tidak valid atau tidak memuat video. [Invalid Link or No Video] \n\n${err}`, id))
             break
         case 'ytmp3':
+            if (!isPmWhitelist) return client.reply(from, bot.error.onlyPremi, id)
             if (args.length !== 1) return client.reply(from, bot.error.format, id)
             if (!isUrl(url) && !url.includes('youtube.com')) return client.reply(from, 'Maaf, url yang kamu kirim tidak valid. [Invalid Link]', id)
             await client.reply(from, bot.wait, id)
@@ -286,6 +292,7 @@ module.exports = msgHandler = async (client = new Client(), message) => {
             })
             break
         case 'ytmp4' :
+            if (!isPmWhitelist) return client.reply(from, bot.error.onlyPremi, id)
             if (args.length !== 1) return client.reply(from, bot.error.format, id)
             if (!isUrl(url) && !url.includes('youtube.com')) return client.reply(from, 'Maaf, url yang kamu kirim tidak valid. [Invalid Link]', id)
             await client.reply(from, bot.wait, id)
