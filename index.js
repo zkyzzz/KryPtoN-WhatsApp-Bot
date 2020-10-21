@@ -26,7 +26,6 @@ const start = (client = new Client()) => {
         msgHandler(client, message)
     })
 
-/*
     // listen group invitation
     client.onAddedToGroup(({ groupMetadata: { id }, contact: { name } }) =>
         client.getGroupMembersId(id)
@@ -48,7 +47,7 @@ const start = (client = new Client()) => {
     client.onRemovedFromGroup((data) => {
          console.log(data)
     })
-*/
+
     // listen paricipant event on group (wellcome message)
     client.onGlobalParicipantsChanged((event) => {
          if (event.action === 'group_join') client.sendTextWithMentions(event.chat, `Hello, Welcome to the group @${event.who.replace('@c.us', '')} \n\nHave fun with us✨`)
