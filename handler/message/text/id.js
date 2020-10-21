@@ -145,3 +145,8 @@ Penggunaan: kirim gambar dengan caption !sticker nobg atau balas gambar yang sud
 Untuk merubah gif menjadi sticker (Giphy Only)
 Penggunaan: Kirim pesan dengan format *gifsticker https://media.giphy.com/media/JUvI2c1ddyzkwK4RlV/giphy.gif*`
 }
+
+exports.textLinkPremium = () => {
+    return `
+https://telegra.ph/Langganan-Krypton-Bot-10-21`
+}

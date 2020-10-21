@@ -521,6 +521,9 @@ module.exports = msgHandler = async (client = new Client(), message) => {
             if (!isgPremiList) return client.reply(from, 'only premium member', id)
             client.sendText(from, 'premium member')
             break
+        case 'premium':
+            client.sendText(from, menuId.textLinkPremium)
+            break
         default:
             console.log(color('[ERROR]', 'red'), color(moment(t * 1000).format('DD/MM/YY HH:mm:ss'), 'yellow'), 'Unregistered Command from', color(pushname))
             break
