@@ -95,9 +95,11 @@ module.exports = msgHandler = async (client = new Client(), message) => {
             await client.reply(from, 'Cek update/news bot di channel BLOG telegram saya\nhttps://t.me/kryptonblog', id)
             break
         case 'menuadmin':
-            if (!isGroupMsg) return client.reply(from, 'Maaf, perintah ini hanya dapat dipakai didalam grup! [Group Only]', id)
+            if (!isGroupMsg) return client.reply(from, bot.error.notGroup, id)
             if (!isGroupAdmins) return client.reply(from, bot.error.notAdmin, id)
-            await client.sendText(from, menuId.textAdmin())
+            const onPm = sender.id
+            await client.sendText(from, 'Menu admin di kirim ke PM silahkan cek')
+            await client.sendText(onPM, menuId.textAdmin())
             break
         case 'donate':
         case 'donasi':
@@ -117,6 +119,7 @@ module.exports = msgHandler = async (client = new Client(), message) => {
                 })
             } else if (args[0] === 'nobg') {
                 if (!isPmWhitelist) return client.reply(from, bot.error.onlyPremi, id)
+                if (isGroupMsg) return client.reply(from, 'Maaf, perintah ini hanya di gunakan di private message saja [PM Only]', id)
                 const encryptMedia = isQuotedImage ? quotedMsg : message
                 const _mimetype = isQuotedImage ? quotedMsg.mimetype : mimetype
                 const mediaData = await decryptMedia(encryptMedia, uaOverride)
