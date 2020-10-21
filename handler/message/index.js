@@ -57,7 +57,7 @@ module.exports = msgHandler = async (client = new Client(), message) => {
                 format: 'Maaf, format pesan salah silahkan periksa menu. [Wrong Format]',
                 notAdmin: 'Gagal, perintah ini hanya dapat digunakan oleh admin grup! [Admin Group Only]',
                 botNotAdmin: 'Gagal, silahkan tambahkan bot sebagai admin grup! [Bot not Admin]',
-                onlyOwner: 'Perintah ini hanya untuk Owner bot [Only Owner Bot]'
+                onlyOwner: 'Perintah ini hanya untuk Owner bot [Only Owner Bot]',
                 onlyPremi: 'Perintah ini hanya untuk member Premium saja [Only Member Premium]'
             }
         }
