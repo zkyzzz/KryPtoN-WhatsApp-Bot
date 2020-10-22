@@ -32,10 +32,9 @@ module.exports = msgHandler = async (client = new Client(), message) => {
         var gPremiList = process.env.G_PREMI_LIST
         const isgPremiList = gPremiList.includes(groupId)
 
-        // Own Prefix
-        var no = process.env.OWNER_PHONE
-        const ownerNumber = `${no}@c.us`
-        const isOwner = sender.id == ownerNumber
+        // Owner
+        var ownId = process.env.OWNER_PHONE
+        const isOwner = ownId.includes(sender.id)
 
         // Bot Group
         var botGroup = process.env.BOT_GROUP
