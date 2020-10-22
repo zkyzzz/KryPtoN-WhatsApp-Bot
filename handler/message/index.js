@@ -61,7 +61,7 @@ module.exports = msgHandler = async (client = new Client(), message) => {
                 notAdmin: 'Gagal, perintah ini hanya dapat digunakan oleh admin grup! [Admin Group Only]',
                 botNotAdmin: 'Gagal, silahkan tambahkan bot sebagai admin grup! [Bot not Admin]',
                 onlyOwner: 'Perintah ini hanya untuk Owner bot [Only Owner Bot]',
-                onlyPremi: 'Perintah ini hanya untuk member Premium saja untuk info silakan join group https://chat.whatsapp.com/DAWsRFyVOyyEGZRZfLdzVP [Only Member Premium]',
+                onlyPremi: 'Perintah ini hanya untuk member Premium saja untuk info silakan join group https://telegra.ph/Langganan-Krypton-Bot-10-21 [Only Member Premium]',
                 onlyPm: 'Maaf, perintah ini hanya di gunakan di private message saja [PM Only]'
             }
         }
@@ -97,7 +97,7 @@ module.exports = msgHandler = async (client = new Client(), message) => {
             break
         case 'update':
         case 'channel':
-            await client.reply(from, 'Cek update/news bot di channel BLOG telegram saya\nhttps://telegra.ph/Langganan-Krypton-Bot-10-21', id)
+            await client.reply(from, 'Cek update/news bot di group WhatsApp kami\nhttps://chat.whatsapp.com/DAWsRFyVOyyEGZRZfLdzVP', id)
             break
         case 'menuadmin':
             if (!isGroupMsg) return client.reply(from, bot.error.notGroup, id)
