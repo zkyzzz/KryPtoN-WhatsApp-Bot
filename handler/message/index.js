@@ -843,7 +843,7 @@ module.exports = msgHandler = async (client = new Client(), message) => {
             client.sendText(from, 'premium member')
             break
         case 'premiumlink':
-            client.sendText(from, menuId.textLinkPremium())
+            client.sendTextWithMentions(from, menuId.textLinkPremium())
             break
         default:
             console.log(color('[ERROR]', 'red'), color(moment(t * 1000).format('DD/MM/YY HH:mm:ss'), 'yellow'), 'Unregistered Command from', color(pushname))

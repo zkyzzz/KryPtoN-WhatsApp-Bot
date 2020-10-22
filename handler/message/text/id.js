@@ -157,5 +157,9 @@ norek 90130016722
 a/n OVIN
 
 Wallet:
-OvO-Gopay-Dana-LinkAja`
+OvO-Gopay-Dana-LinkAja
+
+Hubungi @6283108180955
+
+NB: tidak menerima pulsa ya kak`
 }
