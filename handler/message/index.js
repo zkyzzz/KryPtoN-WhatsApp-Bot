@@ -661,8 +661,8 @@ module.exports = msgHandler = async (client = new Client(), message) => {
                 const post = igMeta.Jumlah_Post
                 await client.sendFileFromUrl(from, foto, 'thumbnail.jpg', `Nama: ${nama}\nUsername: ${username}\nBio: ${bio}\nJumlah folower: ${follower}\nJumlah following: ${following}\nJumlah post: ${post}`, null, true)
                 .catch(() => client.reply(from, 'Terjadi kesalahan mungkin username yang anda kirim tidak valid!', id))
-            }
               })
+            }
             break
         // Group Commands (group admin only)
         case 'kick':
