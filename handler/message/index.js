@@ -98,7 +98,7 @@ module.exports = msgHandler = async (client = new Client(), message) => {
             break
         case 'update':
         case 'channel':
-            await client.reply(from, 'Cek update/news bot di channel BLOG telegram saya\nhttps://chat.whatsapp.com/DAWsRFyVOyyEGZRZfLdzVP', id)
+            await client.reply(from, 'Cek update/news bot di channel BLOG telegram saya\nhttps://telegra.ph/Langganan-Krypton-Bot-10-21', id)
             break
         case 'menuadmin':
             if (!isGroupMsg) return client.reply(from, bot.error.notGroup, id)
