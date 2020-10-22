@@ -35,14 +35,14 @@ const start = (client = new Client()) => {
                 const gPremiList = process.env.G_PREMI_LIST
                 const isgPremiList = gPremiList.includes(id)
                 if (ids.length <=10 ) {
-                    client.sendText(id, 'Maaf, untuk member kurang dari 10, info lebih lengkap https://chat.whatsapp.com/DAWsRFyVOyyEGZRZfLdzVP. Bye~')
+                    client.sendText(id, 'Maaf, untuk member kurang dari 10, info lebih lengkap https://telegra.ph/Langganan-Krypton-Bot-10-21. Bye~')
                     .then(() => client.leaveGroup(id))
                 } else if (ids.length <= 50) {
                     client.sendText(id, `Hello anggota group *${name}*, terima kasih telah mengundang bot ini, untuk meliha bot menu kirim *!menu*`)
                 } else if (isgPremiList) {
                     client.sendText(id, `Hello anggota group premium *${name}*, terima kasih telah mengundang bot ini dan berlangganan, untuk meliha bot menu kirim *!menu*, dan kirim *!premium* untuk menu fitur premium`)
                 } else {
-                    client.sendText(id, 'Maaf, untuk member lebih dari 50 hanya untuk member premium, info lebih lengkap https://chat.whatsapp.com/DAWsRFyVOyyEGZRZfLdzVP. Bye~')
+                    client.sendText(id, 'Maaf, untuk member lebih dari 50 hanya untuk member premium, info lebih lengkap https://telegra.ph/Langganan-Krypton-Bot-10-21. Bye~')
                     .then(() => client.leaveGroup(id))
                 }
             }))
