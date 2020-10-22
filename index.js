@@ -56,7 +56,7 @@ const start = (client = new Client()) => {
         if (event.action === 'add') {
           // Bot Group
           var botGroup = process.env.BOT_GROUP
-          const isBotGroup = botGroup.includes(groupId)
+          const isBotGroup = botGroup.includes(event.chat)
           if (isBotGroup) {
             var blackList = process.env.BLACK_LIST
             if (blackList.includes(event.who)) {
