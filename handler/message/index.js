@@ -2,12 +2,12 @@ require('dotenv').config()
 const { decryptMedia, Client } = require('@open-wa/wa-automate')
 const moment = require('moment-timezone')
 moment.tz.setDefault('Asia/Jakarta').locale('id')
-const { downloader, cekResi, removebg, urlShortener, meme, translate, getLocationData, edukasi, igstalk, nulis } = require('../../lib')
+const { downloader, cekResi, urlShortener, meme, translate, getLocationData, edukasi, igstalk, nulis } = require('../../lib')
 const { msgFilter, color, processTime, isUrl } = require('../../utils')
 const mentionList = require('../../utils/mention')
 const { uploadImages } = require('../../utils/fetcher')
 const sleep = ms => new Promise(res => setTimeout(res, ms))
-const { RemoveBgResult, removeBackgroundFromImageBase64, removeBackgroundFromImageFile } = require('remove.bg')
+const { RemoveBgResult, removeBackgroundFromImageBase64 } = require('remove.bg')
 
 const { menuId, menuEn } = require('./text') // Indonesian & English menu
 
