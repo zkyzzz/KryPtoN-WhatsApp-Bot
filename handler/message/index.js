@@ -589,10 +589,10 @@ module.exports = msgHandler = async (client = new Client(), message) => {
             } else {
               if (isGroupMsg) {
                 if (!isgPremiList) return client.reply(from, bot.error.onlyPremi, id)
-                if (args.length === 1) return client.reply(from, 'Kirim perintah *!nulis [teks]*', id)
+                if (args.length === 0) return client.reply(from, 'Kirim perintah *!tulis [teks]*', id)
                 client.reply(from, bot.wait, id)
                 nulis(string).then(async (hasil) => {
-                  if (hasil.statu != 200) return client.reply(from, 'Maaf mungkin format anda salah/atau tulisan anda tidak support', id)
+                  if (hasil.status != 200) return client.reply(from, 'Maaf mungkin format anda salah/atau tulisan anda tidak support', id)
                   const hasilGambar = hasil.result
                   client.sendFileFromUrl(from, hasilGambar, 'hasil.jpg', 'Ini hasilnya awas ketahuan gurunya', null, true)
                       .then((serialized) => console.log(`Sukses Mengirim File dengan id: ${serialized} diproses selama ${processTime(t, moment())}`))
@@ -600,10 +600,10 @@ module.exports = msgHandler = async (client = new Client(), message) => {
                 })
               } else {
                 if (!isPmWhitelist) return client.reply(from, bot.error.onlyPremi, id)
-                if (args.length === 1) return client.reply(from, 'Kirim perintah *!nulis [teks]*', id)
+                if (args.length === 0) return client.reply(from, 'Kirim perintah *!tulis [teks]*', id)
                 client.reply(from, bot.wait, id)
                 nulis(string).then(async (hasil) => {
-                  if (hasil.statu != 200) return client.reply(from, 'Maaf mungkin format anda salah/atau tulisan anda tidak support', id)
+                  if (hasil.status != 200) return client.reply(from, 'Maaf mungkin format anda salah/atau tulisan anda tidak support', id)
                   const hasilGambar = hasil.result
                   client.sendFileFromUrl(from, hasilGambar, 'hasil.jpg', 'Ini hasilnya awas ketahuan gurunya', null, true)
                       .then((serialized) => console.log(`Sukses Mengirim File dengan id: ${serialized} diproses selama ${processTime(t, moment())}`))
