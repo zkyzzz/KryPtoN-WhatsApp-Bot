@@ -691,6 +691,7 @@ module.exports = msgHandler = async (client = new Client(), message) => {
                     if (groupAdmins.includes(mentionedJidList[i])) return await client.sendText(from, 'Gagal, kamu tidak bisa mengeluarkan admin grup.')
                     await client.removeParticipant(groupId, mentionedJidList[i])
                 }
+                await client.sendImageAsSticker(from, process.env.KICK_STICKER)
             } else {
                 if (!isgPremiList) return client.reply(from, bot.error.onlyPremi, id)
                 if (!isGroupMsg) return client.reply(from, 'Maaf, perintah ini hanya dapat dipakai didalam grup! [Group Only]', id)
@@ -703,6 +704,7 @@ module.exports = msgHandler = async (client = new Client(), message) => {
                     if (groupAdmins.includes(mentionedJidList[i])) return await client.sendText(from, 'Gagal, kamu tidak bisa mengeluarkan admin grup.')
                     await client.removeParticipant(groupId, mentionedJidList[i])
                 }
+                await client.sendImageAsSticker(from, process.env.KICK_STICKER)
             }
             break
         case 'promote':
