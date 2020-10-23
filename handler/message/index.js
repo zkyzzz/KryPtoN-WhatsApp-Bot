@@ -579,7 +579,7 @@ module.exports = msgHandler = async (client = new Client(), message) => {
             if (isBlackList) return client.reply(from, bot.error.blackList, id)
             if (args.length === 0) return client.reply(from, 'Harap masukan pertanyaan yang di cari!', id)
             await client.reply(from, bot.wait, id)
-            edukasi.wiki(args[0])
+            edukasi.wiki(string)
                 .then((result) => client.reply(from, result, id))
                 .catch(() => client.reply(from, 'Error, Pertanyaan mu tidak ada di database kami.', id))
             break
