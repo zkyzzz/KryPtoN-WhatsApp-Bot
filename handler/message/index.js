@@ -583,7 +583,7 @@ module.exports = msgHandler = async (client = new Client(), message) => {
                 .then((result) => client.reply(from, result, id))
                 .catch(() => client.reply(from, 'Error, Pertanyaan mu tidak ada di database kami.', id))
             break
-        case '!tulis':
+        case 'tulis':
             if (isBlackList) {
               client.reply(from, bot.error.blackList, id)
             } else {
@@ -591,7 +591,7 @@ module.exports = msgHandler = async (client = new Client(), message) => {
                 if (!isgPremiList) return client.reply(from, bot.error.onlyPremi, id)
                 if (args.length === 1) return client.reply(from, 'Kirim perintah *!nulis [teks]*', id)
                 client.reply(from, bot.wait, id)
-                nulis(body.slice(8)).then(async (hasil) => {
+                nulis(string).then(async (hasil) => {
                   if (hasil.statu != 200) return client.reply(from, 'Maaf mungkin format anda salah/atau tulisan anda tidak support', id)
                   const hasilGambar = hasil.result
                   client.sendFileFromUrl(from, hasilGambar, 'hasil.jpg', 'Ini hasilnya awas ketahuan gurunya', null, true)
@@ -602,7 +602,7 @@ module.exports = msgHandler = async (client = new Client(), message) => {
                 if (!isPmWhitelist) return client.reply(from, bot.error.onlyPremi, id)
                 if (args.length === 1) return client.reply(from, 'Kirim perintah *!nulis [teks]*', id)
                 client.reply(from, bot.wait, id)
-                nulis(body.slice(8)).then(async (hasil) => {
+                nulis(string).then(async (hasil) => {
                   if (hasil.statu != 200) return client.reply(from, 'Maaf mungkin format anda salah/atau tulisan anda tidak support', id)
                   const hasilGambar = hasil.result
                   client.sendFileFromUrl(from, hasilGambar, 'hasil.jpg', 'Ini hasilnya awas ketahuan gurunya', null, true)
