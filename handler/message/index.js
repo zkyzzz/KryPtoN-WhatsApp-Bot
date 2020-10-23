@@ -2,7 +2,7 @@ require('dotenv').config()
 const { decryptMedia, Client } = require('@open-wa/wa-automate')
 const moment = require('moment-timezone')
 moment.tz.setDefault('Asia/Jakarta').locale('id')
-const { downloader, cekResi, removebg, urlShortener, meme, translate, getLocationData, edukasi, igstalk } = require('../../lib')
+const { downloader, cekResi, removebg, urlShortener, meme, translate, getLocationData, edukasi, igstalk, nulis } = require('../../lib')
 const { msgFilter, color, processTime, isUrl } = require('../../utils')
 const mentionList = require('../../utils/mention')
 const { uploadImages } = require('../../utils/fetcher')
@@ -582,6 +582,35 @@ module.exports = msgHandler = async (client = new Client(), message) => {
             edukasi.wiki(args[0])
                 .then((result) => client.reply(from, result, id))
                 .catch(() => client.reply(from, 'Error, Pertanyaan mu tidak ada di database kami.', id))
+            break
+        case '!tulis':
+            if (isBlackList) {
+              client.reply(from, bot.error.blackList, id)
+            } else {
+              if (isGroupMsg) {
+                if (!isgPremiList) return client.reply(from, bot.error.onlyPremi, id)
+                if (args.length === 1) return client.reply(from, 'Kirim perintah *!nulis [teks]*', id)
+                client.reply(from, bot.wait, id)
+                nulis(body.slice(8)).then(async (hasil) => {
+                  if (hasil.statu != 200) return client.reply(from, 'Maaf mungkin format anda salah/atau tulisan anda tidak support', id)
+                  const hasilGambar = hasil.result
+                  client.sendFileFromUrl(from, hasilGambar, 'hasil.jpg', 'Ini hasilnya awas ketahuan gurunya', null, true)
+                      .then((serialized) => console.log(`Sukses Mengirim File dengan id: ${serialized} diproses selama ${processTime(t, moment())}`))
+                      .catch((err) => console.error(err))
+                })
+              } else {
+                if (!isPmWhitelist) return client.reply(from, bot.error.onlyPremi, id)
+                if (args.length === 1) return client.reply(from, 'Kirim perintah *!nulis [teks]*', id)
+                client.reply(from, bot.wait, id)
+                nulis(body.slice(8)).then(async (hasil) => {
+                  if (hasil.statu != 200) return client.reply(from, 'Maaf mungkin format anda salah/atau tulisan anda tidak support', id)
+                  const hasilGambar = hasil.result
+                  client.sendFileFromUrl(from, hasilGambar, 'hasil.jpg', 'Ini hasilnya awas ketahuan gurunya', null, true)
+                      .then((serialized) => console.log(`Sukses Mengirim File dengan id: ${serialized} diproses selama ${processTime(t, moment())}`))
+                      .catch((err) => console.error(err))
+                })
+              }
+            }
             break
         // Other Command
         case 'meme':
