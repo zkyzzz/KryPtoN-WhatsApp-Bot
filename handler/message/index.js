@@ -614,84 +614,69 @@ module.exports = msgHandler = async (client = new Client(), message) => {
             break
         // Other Command
         case 'meme':
-            if (isBlackList) {
-              client.reply(from, bot.error.blackList, id)
+            if (isBlackList) return client.reply(from, bot.error.blackList, id)
+            if ((isMedia || isQuotedImage) && args.length >= 2) {
+                const top = arg.split('|')[0]
+                const bottom = arg.split('|')[1]
+                const encryptMedia = isQuotedImage ? quotedMsg : message
+                const mediaData = await decryptMedia(encryptMedia, uaOverride)
+                const getUrl = await uploadImages(mediaData, false)
+                const ImageBase64 = await meme.custom(getUrl, top, bottom)
+                client.sendFile(from, ImageBase64, 'image.png', '', null, true)
+                    .then((serialized) => console.log(`Sukses Mengirim File dengan id: ${serialized} diproses selama ${processTime(t, moment())}`))
+                    .catch((err) => console.error(err))
             } else {
-              if ((isMedia || isQuotedImage) && args.length >= 2) {
-                  const top = arg.split('|')[0]
-                  const bottom = arg.split('|')[1]
-                  const encryptMedia = isQuotedImage ? quotedMsg : message
-                  const mediaData = await decryptMedia(encryptMedia, uaOverride)
-                  const getUrl = await uploadImages(mediaData, false)
-                  const ImageBase64 = await meme.custom(getUrl, top, bottom)
-                  client.sendFile(from, ImageBase64, 'image.png', '', null, true)
-                      .then((serialized) => console.log(`Sukses Mengirim File dengan id: ${serialized} diproses selama ${processTime(t, moment())}`))
-                      .catch((err) => console.error(err))
-              } else {
-                  await client.reply(from, 'Tidak ada gambar! Untuk membuka cara penggnaan kirim !menu [Wrong Format]', id)
-              }
+                await client.reply(from, 'Tidak ada gambar! Untuk membuka cara penggnaan kirim !menu [Wrong Format]', id)
             }
             break
         case 'resi':
-            if (isBlackList) {
-              client.reply(from, bot.error.blackList, id)
-            } else {
-              if (args.length !== 2) return client.reply(from, bot.error.format, id)
-              const kurirs = ['jne', 'pos', 'tiki', 'wahana', 'jnt', 'rpx', 'sap', 'sicepat', 'pcp', 'jet', 'dse', 'first', 'ninja', 'lion', 'idl', 'rex']
-              if (!kurirs.includes(args[0])) return client.sendText(from, `Maaf, jenis ekspedisi pengiriman tidak didukung layanan ini hanya mendukung ekspedisi pengiriman ${kurirs.join(', ')} Tolong periksa kembali.`)
-              console.log('Memeriksa No Resi', args[1], 'dengan ekspedisi', args[0])
-              cekResi(args[0], args[1]).then((result) => client.sendText(from, result))
-            }
+            if (isBlackList) return client.reply(from, bot.error.blackList, id)
+            if (args.length !== 2) return client.reply(from, bot.error.format, id)
+            const kurirs = ['jne', 'pos', 'tiki', 'wahana', 'jnt', 'rpx', 'sap', 'sicepat', 'pcp', 'jet', 'dse', 'first', 'ninja', 'lion', 'idl', 'rex']
+            if (!kurirs.includes(args[0])) return client.sendText(from, `Maaf, jenis ekspedisi pengiriman tidak didukung layanan ini hanya mendukung ekspedisi pengiriman ${kurirs.join(', ')} Tolong periksa kembali.`)
+            console.log('Memeriksa No Resi', args[1], 'dengan ekspedisi', args[0])
+            cekResi(args[0], args[1]).then((result) => client.sendText(from, result))
             break
         case 'translate':
-            if (isBlackList) {
-              client.reply(from, bot.error.blackList, id)
-            } else {
-              if (args.length != 1) return client.reply(from, bot.error.format, id)
-              if (!quotedMsg) return client.reply(from, bot.error.format, id)
-              const quoteText = quotedMsg.type == 'chat' ? quotedMsg.body : quotedMsg.type == 'image' ? quotedMsg.caption : ''
-              translate(quoteText, args[0])
-                  .then((result) => client.sendText(from, result))
-                  .catch(() => client.sendText(from, 'Error, Kode bahasa salah.'))
-            }
+            if (isBlackList) return client.reply(from, bot.error.blackList, id)
+            if (args.length != 1) return client.reply(from, bot.error.format, id)
+            if (!quotedMsg) return client.reply(from, bot.error.format, id)
+            const quoteText = quotedMsg.type == 'chat' ? quotedMsg.body : quotedMsg.type == 'image' ? quotedMsg.caption : ''
+            translate(quoteText, args[0])
+                .then((result) => client.sendText(from, result))
+                .catch(() => client.sendText(from, 'Error, Kode bahasa salah.'))
             break
         case 'ceklokasi':
-            if (isBlackList) {
-              client.reply(from, bot.error.blackList, id)
-            } else {
-              if (quotedMsg.type !== 'location') return client.reply(from, bot.error.format, id)
-              console.log(`Request Status Zona Penyebaran Covid-19 (${quotedMsg.lat}, ${quotedMsg.lng}).`)
-              const zoneStatus = await getLocationData(quotedMsg.lat, quotedMsg.lng)
-              if (zoneStatus.kode !== 200) client.sendText(from, 'Maaf, Terjadi error ketika memeriksa lokasi yang anda kirim.')
-              let data = ''
-              for (let i = 0; i < zoneStatus.data.length; i++) {
-                  const { zone, region } = zoneStatus.data[i]
-                  const _zone = zone == 'green' ? 'Hijau* (Aman) \n' : zone == 'yellow' ? 'Kuning* (Waspada) \n' : 'Merah* (Bahaya) \n'
-                  data += `${i + 1}. Kel. *${region}* Berstatus *Zona ${_zone}`
-              }
-              const text = `*CEK LOKASI PENYEBARAN COVID-19*\nHasil pemeriksaan dari lokasi yang anda kirim adalah *${zoneStatus.status}* ${zoneStatus.optional}\n\nInformasi lokasi terdampak disekitar anda:\n${data}`
-              client.sendText(from, text)
+            if (isBlackList) return client.reply(from, bot.error.blackList, id)
+            if (quotedMsg.type !== 'location') return client.reply(from, bot.error.format, id)
+            console.log(`Request Status Zona Penyebaran Covid-19 (${quotedMsg.lat}, ${quotedMsg.lng}).`)
+            const zoneStatus = await getLocationData(quotedMsg.lat, quotedMsg.lng)
+            if (zoneStatus.kode !== 200) client.sendText(from, 'Maaf, Terjadi error ketika memeriksa lokasi yang anda kirim.')
+            let data = ''
+            for (let i = 0; i < zoneStatus.data.length; i++) {
+                const { zone, region } = zoneStatus.data[i]
+                const _zone = zone == 'green' ? 'Hijau* (Aman) \n' : zone == 'yellow' ? 'Kuning* (Waspada) \n' : 'Merah* (Bahaya) \n'
+                data += `${i + 1}. Kel. *${region}* Berstatus *Zona ${_zone}`
             }
+            const text = `*CEK LOKASI PENYEBARAN COVID-19*\nHasil pemeriksaan dari lokasi yang anda kirim adalah *${zoneStatus.status}* ${zoneStatus.optional}\n\nInformasi lokasi terdampak disekitar anda:\n${data}`
+            client.sendText(from, text)
             break
         case 'igstalk':
-            if (isBlackList) {
-              client.reply(from, bot.error.blackList, id)
-            } else {
-              if (args.length !== 1) return client.reply(from, bot.error.format, id)
-              await client.reply(from, bot.wait, id)
-              igstalk(args[0]).then(async (igMeta) => {
-                if ( igMeta.status !== 200) client.reply(from, 'Maaf, username yang anda kirim tidak valid.', id)
-                const foto = igMeta.Profile_pic
-                const nama = igMeta.Name
-                const username = igMeta.Username
-                const bio = igMeta.Biodata
-                const follower = igMeta.Jumlah_Followers
-                const following = igMeta.Jumlah_Following
-                const post = igMeta.Jumlah_Post
-                await client.sendFileFromUrl(from, foto, 'thumbnail.jpg', `Nama: ${nama}\nUsername: ${username}\nBio: ${bio}\nJumlah folower: ${follower}\nJumlah following: ${following}\nJumlah post: ${post}`, null, true)
-                .catch(() => client.reply(from, 'Terjadi kesalahan mungkin username yang anda kirim tidak valid!', id))
-              })
-            }
+            if (isBlackList) return client.reply(from, bot.error.blackList, id)
+            if (args.length !== 1) return client.reply(from, bot.error.format, id)
+            await client.reply(from, bot.wait, id)
+            igstalk(args[0]).then(async (igMeta) => {
+              if ( igMeta.status !== 200) return client.reply(from, 'Maaf, username yang anda kirim tidak valid.', id)
+              const foto = igMeta.Profile_pic
+              const nama = igMeta.Name
+              const username = igMeta.Username
+              const bio = igMeta.Biodata
+              const follower = igMeta.Jumlah_Followers
+              const following = igMeta.Jumlah_Following
+              const post = igMeta.Jumlah_Post
+              await client.sendFileFromUrl(from, foto, 'thumbnail.jpg', `Nama: ${nama}\nUsername: ${username}\nBio: ${bio}\nJumlah folower: ${follower}\nJumlah following: ${following}\nJumlah post: ${post}`, null, true)
+              .catch(() => client.reply(from, 'Terjadi kesalahan mungkin username yang anda kirim tidak valid!', id))
+            })
             break
         // Group Commands (group admin only)
         case 'kick':
@@ -866,10 +851,6 @@ module.exports = msgHandler = async (client = new Client(), message) => {
                 await client.leaveGroup(gclist.contact.id)
             }
             client.sendText(from, 'Berhasil keluar semua group')
-            break
-        case 'test':
-            if (!isgPremiList) return client.reply(from, 'only premium member', id)
-            client.sendText(from, 'premium member')
             break
         case 'premiumlink':
             client.sendTextWithMentions(from, menuId.textLinkPremium())
