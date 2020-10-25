@@ -20,7 +20,7 @@ EXPOSE 8080
 #
 RUN git clone -b master https://github.com/Kry9toN/KryPtoN-WhatsApp-Bot /home/wabot
 WORKDIR /home/wabot
-RUN wget https://raw.githubusercontent.com/Kry9toN/KryPtoN-WhatsApp-Bot/master/sessions/Imperial.data.json
+RUN wget https://raw.githubusercontent.com/Kry9toN/KryPtoN-WhatsApp-Bot/master/sessions/session.data.json
 
 RUN npm install
 RUN npm install --only=dev --ignore-scripts
