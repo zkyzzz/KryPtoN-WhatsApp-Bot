@@ -24,7 +24,7 @@
 |       ✅       | Reply A Photo                                   |
 |       ✅       | Image Url                                       |
 |       ✅       | Animated sticker using giphy url                |
-|       WIP      | sticker with no background                      |
+|       ✅       | sticker with no background                      |
 |       WIP      | sticker meme                                    |
 
 | Downloader     |                     Feature                     |
