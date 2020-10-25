@@ -316,62 +316,43 @@ module.exports = msgHandler = async (client = new Client(), message) => {
                   if (!isgPremiList) return client.reply(from, bot.error.onlyPremi, id)
                   if (args.length !== 1) return client.reply(from, bot.error.format, id)
                   if (!isUrl(url) && !url.includes('instagram.com')) return client.reply(from, 'Maaf, link yang kamu kirim tidak valid. [Invalid Link]', id)
-                  await client.reply(from, `_Scraping Metadata..._ \n\n${menuId.textDonasi()}`, id)
-                  downloader.insta(url).then(async (data) => {
-                      if (data.type == 'GraphSidecar') {
-                          if (data.image.length != 0) {
-                              data.image.map((x) => client.sendFileFromUrl(from, x, 'photo.jpg', '', null, null, true))
-                                  .then((serialized) => console.log(`Sukses Mengirim File dengan id: ${serialized} diproses selama ${processTime(t, moment())}`))
-                                  .catch((err) => console.error(err))
-                          }
-                          if (data.video.length != 0) {
-                              data.video.map((x) => client.sendFileFromUrl(from, x.videoUrl, 'video.jpg', '', null, null, true))
-                                  .then((serialized) => console.log(`Sukses Mengirim File dengan id: ${serialized} diproses selama ${processTime(t, moment())}`))
-                                  .catch((err) => console.error(err))
-                          }
-                      } else if (data.type == 'GraphImage') {
-                          client.sendFileFromUrl(from, data.image, 'photo.jpg', '', null, null, true)
+                  await client.reply(from, bot.wait, id)
+                  downloader.insta(url)
+                    .then(async (data) => {
+                      const uri = data.url.replace(/\?.*$/g, '')
+                      if (data.media_type == 'photo') {
+                          client.sendFileFromUrl(from, uri, 'photo.jpg', '', null, null, true)
                               .then((serialized) => console.log(`Sukses Mengirim File dengan id: ${serialized} diproses selama ${processTime(t, moment())}`))
                               .catch((err) => console.error(err))
-                      } else if (data.type == 'GraphVideo') {
-                          client.sendFileFromUrl(from, data.video.videoUrl, 'video.mp4', '', null, null, true)
+                      } else if (data.media_type == 'video') {
+                          client.sendFileFromUrl(from, uri, 'video.mp4', '', null, null, true)
                               .then((serialized) => console.log(`Sukses Mengirim File dengan id: ${serialized} diproses selama ${processTime(t, moment())}`))
                               .catch((err) => console.error(err))
                       }
                   })
                       .catch((err) => {
-                          if (err === 'Not a video') { return client.reply(from, 'Error, tidak ada video di link yang kamu kirim. [Invalid Link]', id) }
+                          console.log(err)
                           client.reply(from, 'Error, user private atau link salah [Private or Invalid Link]', id)
                       })
               } else {
                   if (!isPmWhitelist) return client.reply(from, bot.error.onlyPremi, id)
                   if (args.length !== 1) return client.reply(from, bot.error.format, id)
                   if (!isUrl(url) && !url.includes('instagram.com')) return client.reply(from, 'Maaf, link yang kamu kirim tidak valid. [Invalid Link]', id)
-                  await client.reply(from, `_Scraping Metadata..._ \n\n${menuId.textDonasi()}`, id)
+                  await client.reply(from, bot.wait, id)
                   downloader.insta(url).then(async (data) => {
-                      if (data.type == 'GraphSidecar') {
-                          if (data.image.length != 0) {
-                              data.image.map((x) => client.sendFileFromUrl(from, x, 'photo.jpg', '', null, null, true))
-                                  .then((serialized) => console.log(`Sukses Mengirim File dengan id: ${serialized} diproses selama ${processTime(t, moment())}`))
-                                  .catch((err) => console.error(err))
-                          }
-                          if (data.video.length != 0) {
-                              data.video.map((x) => client.sendFileFromUrl(from, x.videoUrl, 'video.jpg', '', null, null, true))
-                                  .then((serialized) => console.log(`Sukses Mengirim File dengan id: ${serialized} diproses selama ${processTime(t, moment())}`))
-                                  .catch((err) => console.error(err))
-                          }
-                      } else if (data.type == 'GraphImage') {
-                          client.sendFileFromUrl(from, data.image, 'photo.jpg', '', null, null, true)
+                      const uri = data.url.replace(/\?.*$/g, '')
+                      if (data.media_type == 'photo') {
+                          client.sendFileFromUrl(from, uri, 'photo.jpg', '', null, null, true)
                               .then((serialized) => console.log(`Sukses Mengirim File dengan id: ${serialized} diproses selama ${processTime(t, moment())}`))
                               .catch((err) => console.error(err))
-                      } else if (data.type == 'GraphVideo') {
-                          client.sendFileFromUrl(from, data.video.videoUrl, 'video.mp4', '', null, null, true)
+                      } else if (data.media_type == 'video') {
+                          client.sendFileFromUrl(from, uri, 'video.mp4', '', null, null, true)
                               .then((serialized) => console.log(`Sukses Mengirim File dengan id: ${serialized} diproses selama ${processTime(t, moment())}`))
                               .catch((err) => console.error(err))
                       }
                   })
                       .catch((err) => {
-                          if (err === 'Not a video') { return client.reply(from, 'Error, tidak ada video di link yang kamu kirim. [Invalid Link]', id) }
+                          console.log(err)
                           client.reply(from, 'Error, user private atau link salah [Private or Invalid Link]', id)
                       })
               }
