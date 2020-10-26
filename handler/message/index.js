@@ -328,6 +328,9 @@ module.exports = msgHandler = async (client = new Client(), message) => {
                           client.sendFileFromUrl(from, uri, 'video.mp4', '', null, null, true)
                               .then((serialized) => console.log(`Sukses Mengirim File dengan id: ${serialized} diproses selama ${processTime(t, moment())}`))
                               .catch((err) => console.error(err))
+                      } else {
+                          console.log('Not Support slider post')
+                          client.reply(from, 'Maaf masih belum support untul slider post')
                       }
                   })
                       .catch((err) => {
