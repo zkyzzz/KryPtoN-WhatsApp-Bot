@@ -86,39 +86,47 @@ module.exports = msgHandler = async (client = new Client(), message) => {
         // Menu and TnC
         case 'start' :
             if (isBlackList) return client.reply(from, bot.error.blackList, id)
+            await client.simulateTyping(from, true)
             await client.sendText(from, 'Hai nama saya KryPtoN Bot, saya di tulis dari *Javascript*,\nsaya di ciptakan oleh Dhimas (KryPtoN) https://kry9ton.tech\nsilakan ketik !help untuk mengetahui fitur ku.')
         break
         case 'speed':
         case 'ping':
             if (isBlackList) return client.reply(from, bot.error.blackList, id)
+            await client.simulateTyping(from, true)
             await client.sendText(from, `Pong!!!!\nSpeed: ${processTime(t, moment())} _Second_`)
             break
         case 'tnc':
+            await client.simulateTyping(from, true)
             await client.sendText(from, menuId.textTnC())
             break
         case 'menu':
         case 'help':
             if (isBlackList) return client.reply(from, bot.error.blackList, id)
+            await client.simulateTyping(from, true)
             await client.sendText(from, menuId.textMenu(pushname))
                 .then(() => ((isGroupMsg) && (isGroupAdmins)) ? client.sendText(from, 'Menu Admin Grup: *!menuadmin*') : null)
             break
         case 'update':
         case 'channel':
+            await client.simulateTyping(from, true)
             await client.reply(from, 'Cek update/news bot di group WhatsApp kami\nhttps://chat.whatsapp.com/DAWsRFyVOyyEGZRZfLdzVP', id)
             break
         case 'menuadmin':
             if (isBlackList) return client.reply(from, bot.error.blackList, id)
             if (!isGroupMsg) return client.reply(from, bot.error.notGroup, id)
             if (!isGroupAdmins) return client.reply(from, bot.error.notAdmin, id)
+            await client.simulateTyping(from, true)
             await client.sendText(from, menuId.textAdmin())
             break
         case 'premium':
             if (isBlackList) return client.reply(from, bot.error.blackList, id)
             if (!isPmWhitelist) return client.reply(from, bot.error.onlyPremi, id)
+            await client.simulateTyping(from, true)
             await client.sendText(from, menuId.textPremi(pushname))
             break
         case 'donate':
         case 'donasi':
+            await client.simulateTyping(from, true)
             await client.sendText(from, menuId.textDonasi())
             break
         // Sticker Creator
