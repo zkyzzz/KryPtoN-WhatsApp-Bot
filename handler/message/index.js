@@ -578,7 +578,7 @@ module.exports = msgHandler = async (client = new Client(), message) => {
                 nulis(string).then(async (hasil) => {
                   if (hasil.status != 200) return client.reply(from, 'Maaf mungkin format anda salah/atau tulisan anda tidak support', id)
                   const hasilGambar = hasil.result
-                  client.sendFileFromUrl(from, hasilGambar, 'hasil.jpg', 'Ini hasilnya awas ketahuan gurunya', null, true)
+                  client.sendImage(from, hasilGambar, 'hasil.jpg', 'Ini hasilnya awas ketahuan gurunya', null, true)
                       .then((serialized) => console.log(`Sukses Mengirim File dengan id: ${serialized} diproses selama ${processTime(t, moment())}`))
                       .catch((err) => console.error(err))
                 })
@@ -589,7 +589,7 @@ module.exports = msgHandler = async (client = new Client(), message) => {
                 nulis(string).then(async (hasil) => {
                   if (hasil.status != 200) return client.reply(from, 'Maaf mungkin format anda salah/atau tulisan anda tidak support', id)
                   const hasilGambar = hasil.result
-                  client.sendFileFromUrl(from, hasilGambar, 'hasil.jpg', 'Ini hasilnya awas ketahuan gurunya', null, true)
+                  client.sendImage(from, hasilGambar, 'hasil.jpg', 'Ini hasilnya awas ketahuan gurunya', null, true)
                       .then((serialized) => console.log(`Sukses Mengirim File dengan id: ${serialized} diproses selama ${processTime(t, moment())}`))
                       .catch((err) => console.error(err))
                 })
