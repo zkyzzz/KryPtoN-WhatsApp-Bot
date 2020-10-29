@@ -68,7 +68,6 @@ const start = (client = new Client()) => {
           if (isBotGroup) {
               client.sendTextWithMentions(event.chat, `Hallo, Selamat datang di grup @${event.who.replace('@c.us', '')} \nJangan lupa baca deskirpsi!\n\nGroup ini hanya untuk menanyakan soal informasi premium/berlangganan pada bot KryPtoN, jika menggunakan bot di sini seperti sticker, kami akan kick dan memasukan anda ke blacklist bot kami`)
           } else {
-            database.connect()
             const isBlacklist = database.query('SELECT id FROM blacklist')
             if (isBlacklist.includes(event.who)) {
                 client.sendTextWithMentions(event.chat, `@${event.who.replace('@c.us', '')} User spammer detected, saya akan mengekick nya`)
@@ -76,7 +75,6 @@ const start = (client = new Client()) => {
             } else {
                 client.sendTextWithMentions(event.chat, `Hallo, Selamat datang di grup @${event.who.replace('@c.us', '')} \nJangan lupa baca deskirpsi!\n\nSelamat bersenang-senang semua✨`)
             }
-            database.end()
           }
         }
         if (event.action === 'remove') return client.sendTextWithMentions(event.chat, `Selamat jalan user @${event.who.replace('@c.us', '')}`)

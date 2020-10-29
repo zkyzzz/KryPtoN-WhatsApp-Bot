@@ -830,9 +830,15 @@ module.exports = msgHandler = async (client = new Client(), message) => {
               const orang = `${id}@c.us`
               if (groupAdmins.includes(orang)) return await client.sendText(from, 'Gagal, kamu tidak bisa mengeluarkan admin grup.')
               database.connect()
-              await database.query(`INSERT INTO blacklist (id) VALUES (${orang})`)
-              await client.removeParticipant(groupId, orang)
-              await client.sendTextWithMentions(from, `@${id} telah di *gban*`)
+              database.query(`INSERT INTO blacklist (id) VALUES ('${orang}')`)
+                .then((res) => {
+                  client.removeParticipant(groupId, orang)
+                  client.sendTextWithMentions(from, `@${id} telah di *gban*`)
+                  console.log(res)
+                }).catch((err) => {
+                  console.log(err)
+                  client.sendText(from, 'Telah terjadi error coba liat log')
+              })
               database.end()
             } else {
               if (!isgPremiList) return client.reply(from, bot.error.onlyPremi, id)
@@ -850,8 +856,14 @@ module.exports = msgHandler = async (client = new Client(), message) => {
               const id = args[0]
               const orang = `${id}@c.us`
               database.connect()
-              await database.query(`DELETE FROM blacklist WHERE id = '${orang}'`)
-              await client.sendTextWithMentions(from, `Berhasil mencabut *gban* @${id}`)
+              database.query(`DELETE FROM blacklist WHERE id = '${orang}'`)
+                .then((res) => {
+                  client.sendTextWithMentions(from, `Berhasil mencabut *gban* @${id}`)
+                  console.log(res)
+                }).catch((err) => {
+                  client.sendText(from, 'Telah terjadi error coba liat log')
+                  console.log(err)
+              })
               database.end()
             } else {
               if (!isgPremiList) return client.reply(from, bot.error.onlyPremi, id)
