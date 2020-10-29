@@ -13,7 +13,7 @@ const database = new pg.Client({
 
 database.connect()
 
-database.query('SELECT table_schema,table_name FROM information_schema.tables;', (err, res) => {
+database.query('SELECT id FROM blacklist;', (err, res) => {
   if (err) throw err
   for (let row of res.rows) {
     console.log(JSON.stringify(row))
