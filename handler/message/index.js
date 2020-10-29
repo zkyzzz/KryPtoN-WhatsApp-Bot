@@ -8,6 +8,14 @@ const mentionList = require('../../utils/mention')
 const { uploadImages } = require('../../utils/fetcher')
 const sleep = ms => new Promise(res => setTimeout(res, ms))
 const { RemoveBgResult, removeBackgroundFromImageBase64 } = require('remove.bg')
+const pg = require('pg')
+
+const database = new pg.Client({
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false
+  }
+})
 
 const { menuId, menuEn } = require('./text') // Indonesian & English menu
 
@@ -66,7 +74,9 @@ module.exports = msgHandler = async (client = new Client(), message) => {
                 onlyOwner: 'Perintah ini hanya untuk Owner bot [Only Owner Bot]',
                 onlyPremi: 'Perintah ini hanya untuk member Premium saja untuk info silakan join group https://telegra.ph/Langganan-Krypton-Bot-10-21 [Only Member Premium]',
                 onlyPm: 'Maaf, perintah ini hanya di gunakan di private message saja [PM Only]',
-                blackList: 'Maaf, anda masuk dalah blacklist bot ini, anda tidak bisa memakai fitur bot ini, mungkin ada sebelumnya melakukan spam di sini atau di group lain'
+                blackList: 'Maaf, anda masuk dalam global ban (gban) bot ini, anda tidak bisa memakai fitur bot ini, mungkin ada sebelumnya melakukan spam di sini atau di group lain\nAnda bisa join ke group support kami untuk mencabut global bannednya https://chat.whatsapp.com/DAWsRFyVOyyEGZRZfLdzVP',
+                ungbanGroup: 'Maaf, untuk fitur ini hanya di group support untuk menghindari penyalah gunaan fitur ini\nTapi para admin bisa Global Ban dengan request di group support kami https://chat.whatsapp.com/DAWsRFyVOyyEGZRZfLdzVP\nDengan cara join dan ketik seperti di bawah:\n#GBAN\nNo:<nomer yang akan di ban>\n@<tag admin>',
+                gbanGroup: 'Maaf, untuk fitur ini hanya di group support untuk menghindari penyalah gunaan fitur ini\nTapi para admin bisa Global Ban dengan request di group support kami https://chat.whatsapp.com/DAWsRFyVOyyEGZRZfLdzVP\nDengan cara join dan ketik seperti di bawah:\n#UNGBAN\nNo:<nomer yang akan di ban>\n@<tag admin>'
             }
         }
 
@@ -810,6 +820,47 @@ module.exports = msgHandler = async (client = new Client(), message) => {
             const uId = sender.id
             client.sendText(from, `ID kamu ini adalah = ${uId}`)
             break
+        case 'gban':
+            if (isBotGroup) {
+              if (!isGroupMsg) return client.reply(from, 'Maaf, perintah ini hanya dapat dipakai didalam grup! [Group Only]', id)
+              if (!isGroupAdmins) return client.reply(from, bot.error.notAdmin, id)
+              if (!isBotGroupAdmins) return client.reply(from, bot.error.botNotAdmin, id)
+              if (args.length !== 1) return client.reply(from, 'Untuk menggunakan fitur ini, kirim perintah *!add* 628xxxxx', id)
+              const id = args[0]
+              const orang = `${id}@c.us`
+              if (groupAdmins.includes(orang)) return await client.sendText(from, 'Gagal, kamu tidak bisa mengeluarkan admin grup.')
+              database.connect()
+              await database.query(`INSERT INTO blacklist (id) VALUES (${orang})`)
+              await client.removeParticipant(groupId, orang)
+              await client.sendTextWithMentions(from, `@${id} telah di *gban*`)
+              database.end()
+            } else {
+              if (!isgPremiList) return client.reply(from, bot.error.onlyPremi, id)
+              if (!isGroupMsg) return client.reply(from, 'Maaf, perintah ini hanya dapat dipakai didalam grup! [Group Only]', id)
+              if (!isGroupAdmins) return client.reply(from, bot.error.notAdmin, id)
+              if (!isBotGroupAdmins) return client.reply(from, bot.error.botNotAdmin, id)
+              client.reply(from, bot.error.gbanGroup, id)
+            }
+            break
+        case 'ugban':
+            if (isBotGroup) {
+              if (!isGroupMsg) return client.reply(from, 'Maaf, perintah ini hanya dapat dipakai didalam grup! [Group Only]', id)
+              if (!isGroupAdmins) return client.reply(from, bot.error.notAdmin, id)
+              if (!isBotGroupAdmins) return client.reply(from, bot.error.botNotAdmin, id)
+              const id = args[0]
+              const orang = `${id}@c.us`
+              database.connect()
+              await database.query(`DELETE FROM blacklist WHERE id = '${orang}'`)
+              await client.sendTextWithMentions(from, `Berhasil mencabut *gban* @${id}`)
+              database.end()
+            } else {
+              if (!isgPremiList) return client.reply(from, bot.error.onlyPremi, id)
+              if (!isGroupMsg) return client.reply(from, 'Maaf, perintah ini hanya dapat dipakai didalam grup! [Group Only]', id)
+              if (!isGroupAdmins) return client.reply(from, bot.error.notAdmin, id)
+              if (!isBotGroupAdmins) return client.reply(from, bot.error.botNotAdmin, id)
+              client.reply(from, bot.error.ungbanGroup, id)
+            }
+        break
         //Owner cmd
         case 'botstat':
             if (!isOwner) return client.reply(from, bot.error.onlyOwner, id)

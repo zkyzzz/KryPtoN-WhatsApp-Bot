@@ -11,16 +11,6 @@ const database = new pg.Client({
   }
 })
 
-database.connect()
-
-database.query('SELECT id FROM blacklist;', (err, res) => {
-  if (err) throw err
-  for (let row of res.rows) {
-    console.log(JSON.stringify(row))
-  }
-  database.end()
-})
-
 const start = (client = new Client()) => {
     console.log('[DEV]', color('KryPtoN', 'yellow'))
     console.log('[CLIENT] CLIENT Started!')
@@ -76,21 +66,17 @@ const start = (client = new Client()) => {
           var botGroup = process.env.BOT_GROUP
           const isBotGroup = botGroup.includes(event.chat)
           if (isBotGroup) {
-            var blackList = process.env.BLACK_LIST
-            if (blackList.includes(event.who)) {
-                client.sendTextWithMentions(event.chat, `@${event.who.replace('@c.us', '')} User spammer detected, saya akan mengekick nya`)
-                .then(() => client.removeParticipant(event.chat, event.who))
-            } else {
-                client.sendTextWithMentions(event.chat, `Hallo, Selamat datang di grup @${event.who.replace('@c.us', '')} \nJangan lupa baca deskirpsi!\n\nGroup ini hanya untuk menanyakan soal informasi premium/berlangganan pada bot KryPtoN, jika menggunakan bot di sini seperti sticker, kami akan kick dan memasukan anda ke blacklist bot kami`)
-            }
+              client.sendTextWithMentions(event.chat, `Hallo, Selamat datang di grup @${event.who.replace('@c.us', '')} \nJangan lupa baca deskirpsi!\n\nGroup ini hanya untuk menanyakan soal informasi premium/berlangganan pada bot KryPtoN, jika menggunakan bot di sini seperti sticker, kami akan kick dan memasukan anda ke blacklist bot kami`)
           } else {
-            var blackList = process.env.BLACK_LIST
-            if (blackList.includes(event.who)) {
+            database.connect()
+            const isBlacklist = database.query('SELECT id FROM blacklist')
+            if (isBlacklist.includes(event.who)) {
                 client.sendTextWithMentions(event.chat, `@${event.who.replace('@c.us', '')} User spammer detected, saya akan mengekick nya`)
                 .then(() => client.removeParticipant(event.chat, event.who))
             } else {
                 client.sendTextWithMentions(event.chat, `Hallo, Selamat datang di grup @${event.who.replace('@c.us', '')} \nJangan lupa baca deskirpsi!\n\nSelamat bersenang-senang semua✨`)
             }
+            database.end()
           }
         }
         if (event.action === 'remove') return client.sendTextWithMentions(event.chat, `Selamat jalan user @${event.who.replace('@c.us', '')}`)
