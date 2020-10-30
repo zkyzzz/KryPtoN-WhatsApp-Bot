@@ -2,6 +2,7 @@
  
 # KryPtoN Whatsapp Bot 
 [![CodeFactor](https://www.codefactor.io/repository/github/kry9ton/krypton-whatsapp-bot/badge)](https://www.codefactor.io/repository/github/kry9ton/krypton-whatsapp-bot)
+[![DeepScan grade](https://deepscan.io/api/teams/11540/projects/14446/branches/269535/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=11540&pid=14446&bid=269535)
 [![Version](https://img.shields.io/badge/version%20K--wa%20Bot-v1.1.0-brightgreen)](https://github.com/Kry9toN/KryPtoN-WhatsApp-Bot/releases)
 
 [![Fork](https://img.shields.io/github/forks/Kry9toN/KryPtoN-WhatsApp-Bot)](https://github.com/Kry9toN/KryPtoN-WhatsApp-Bot/network/members)
